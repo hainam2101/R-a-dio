@@ -1,0 +1,145 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net;
+using System.IO;
+using Newtonsoft.Json;
+using System.Windows;
+
+using System.Windows.Controls;
+using System.Windows.Forms;
+
+namespace Radio
+{
+    /// OK!: Auto-update
+    /// TODO: Get DJ image with XHTTP?
+    /// OK!: Convert seconds to Min:Seconds
+
+    class Song : Timer
+    {
+        public string Name { get; set; }
+        public string Dj { get; set; }
+        public int Listeners { get; set; }
+
+        private int _startTime;
+        private int _endTime;
+        private int _currentTime;
+
+        /// <summary>
+        /// CurrentTime holds the current second of the song playing.
+        /// </summary>
+        public string CurrentTime
+        {
+            get
+            {
+                string time = SecondsToMinutesAndSeconds(Math.Abs(_startTime - _currentTime));
+                return time;
+            }
+            private set { _currentTime = int.Parse(value); }
+        }
+
+        /// <summary>
+        /// The time when the song finishes.
+        /// </summary>
+        public string EndTime
+        {
+            get { return SecondsToMinutesAndSeconds(_endTime - _startTime); }
+            private set { _endTime = int.Parse(value); }
+        }
+
+        /// <summary>
+        /// The time when the song started.
+        /// </summary>
+        public string StartTime
+        {
+            get { return SecondsToMinutesAndSeconds(_startTime); }
+            private set { _startTime = int.Parse(value); }
+        }
+
+        public Song() { }
+
+        /// <summary>
+        /// This function gets the data from r/a/dio api by doing an HTTP request.
+        /// It updates the "important" fields od the class.
+        /// </summary>
+        public void GetDatafromApi()
+        {
+            try
+            {
+                HttpWebRequest pageRequest = (HttpWebRequest)WebRequest.Create("https://r-a-d.io/api");
+                pageRequest.Method = "GET";
+
+                pageRequest.KeepAlive = false;
+
+                HttpWebResponse pageResponse = (HttpWebResponse)pageRequest.GetResponse();
+                //Console.WriteLine("pageRequest.Headers is: {0}", pageRequest.Headers);
+                //Response = pageRequest.Headers.ToString();
+
+                Stream streamResponse = pageResponse.GetResponseStream();
+                StreamReader streamRead = new StreamReader(streamResponse);
+
+                string rawPage = streamRead.ReadToEnd();
+
+                pageResponse.Close();
+                streamResponse.Close();
+                streamRead.Close();
+
+
+                dynamic jsonData = JsonConvert.DeserializeObject(rawPage);
+
+                Name = jsonData.main.np;
+                Dj = jsonData.main.dj.djname;
+                Listeners = jsonData.main.listeners;
+                StartTime = jsonData.main.start_time;
+                CurrentTime = jsonData.main.current;
+                EndTime = jsonData.main.end_time;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        // WARNING: Remember: there's a bug when a DJ is playing, sometimes CurrentTime ends up being a lot more than
+        // EndTime (since EndTime is 0:00); that will cause to call GetDatafromApi() every second, which
+        // is not very performance wise!
+        /// <summary>
+        /// Updated the _currentTime counter, checks if song has ended, and if so calls GetDataFromApi() and returns
+        /// true. False otherwise.
+        /// </summary>
+        /// <returns></returns>
+        public bool TickerAndUpdate()
+        {
+            ++_currentTime;
+            if (_currentTime >= _endTime)
+            {
+                this.GetDatafromApi();
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Converts Seconds (an int of the form 1456894731) to a string of minutes and seconds (in the form
+        /// of MIN:SECSEC 9:06, or 4:23, for example.
+        /// </summary>
+        static string SecondsToMinutesAndSeconds(int Seconds)
+        {
+            int minutes = 0;
+            int secondsObtained = Seconds % 60;
+            string secondsStrObtained = secondsObtained.ToString();
+
+            // This makes posible MM:SS, instead of MM:S (3:09, instead of 3:9)
+            if (secondsObtained > -1 && secondsObtained < 10)
+            {
+                secondsStrObtained = String.Format("0{0}", secondsObtained);
+            }
+
+            minutes = Seconds / 60;
+            string result = String.Format("{0}:{1}", minutes, secondsStrObtained);
+            return result;
+        }
+    }
+}
