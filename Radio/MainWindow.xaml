@@ -13,7 +13,7 @@
         <TextBlock x:Name="textBlockDJValue" HorizontalAlignment="Left" Margin="71,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>
         <TextBlock x:Name="textBlockListeners" HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="Wrap" Text="Listeners:" VerticalAlignment="Top" Height="22" Width="56"/>
         <TextBlock x:Name="textBlockListenersValue" HorizontalAlignment="Left" Margin="71,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>
-        <TextBlock x:Name="textBlockCurrentTime" HorizontalAlignment="Left" Margin="10,127,0,0" TextWrapping="Wrap" Text="Seconds left:" VerticalAlignment="Top" Height="22" Width="91"/>
+        <TextBlock x:Name="textBlockCurrentTime" HorizontalAlignment="Left" Margin="10,127,0,0" TextWrapping="Wrap" Text="Current second:" VerticalAlignment="Top" Height="22" Width="91"/>
         <TextBlock x:Name="textBlockCurrentTimeValue" HorizontalAlignment="Left" Margin="106,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="401"><Run Text=""/></TextBlock>
         <TextBlock x:Name="textBlockEndTimeSeconds" HorizontalAlignment="Left" Margin="10,154,0,0" TextWrapping="Wrap" Text="Duration Seconds:" VerticalAlignment="Top" Height="22" Width="111"/>
         <TextBlock x:Name="textBlockEndTimeSecondsValue" HorizontalAlignment="Left" Margin="121,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="381"><Run Text=""/></TextBlock>
