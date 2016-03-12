@@ -58,7 +58,39 @@ namespace Radio
             private set { _startTime = int.Parse(value); }
         }
 
+        /// <summary>
+        /// Length of song, stated in seconds.
+        /// </summary>
+        public double DoubleEndTime
+        {
+            get { return TotalSeconds(_endTime - _startTime); }
+            private set { }
+        }
+
+        /// <summary>
+        /// Current position of the second within song.
+        /// </summary>
+        public double DoubleCurrentTime
+        {
+            get { return TotalSeconds(Math.Abs(_startTime - _currentTime)); }
+            private set { }
+        }
+
         public Song() { }
+
+        /// <summary>
+        /// Calculates the total seconds.
+        /// </summary>
+        /// <param name="Seconds"></param>
+        /// <returns></returns>
+        static double TotalSeconds(int Seconds)
+        {
+            int totalSeconds = 0;
+            int secondsObtained = Seconds % 60;
+            int minutesObtained = Seconds / 60;
+            totalSeconds = secondsObtained + minutesObtained * 60;
+            return (double)totalSeconds;
+        }
 
         /// <summary>
         /// This function gets the data from r/a/dio api by doing an HTTP request.

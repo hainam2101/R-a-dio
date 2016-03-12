@@ -17,6 +17,7 @@
         <TextBlock x:Name="textBlockCurrentTimeValue" HorizontalAlignment="Left" Margin="106,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="401"><Run Text=""/></TextBlock>
         <TextBlock x:Name="textBlockEndTimeSeconds" HorizontalAlignment="Left" Margin="10,154,0,0" TextWrapping="Wrap" Text="Duration Seconds:" VerticalAlignment="Top" Height="22" Width="111"/>
         <TextBlock x:Name="textBlockEndTimeSecondsValue" HorizontalAlignment="Left" Margin="121,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="381"><Run Text=""/></TextBlock>
+        <Slider x:Name="slider" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="492"/>
 
 
     </Grid>

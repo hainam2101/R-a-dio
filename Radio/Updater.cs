@@ -27,7 +27,8 @@ namespace Radio
         /// <param name="StartTime"></param>
         /// <param name="CurrentTime"></param>
         /// <param name="EndTime"></param>
-        public static void NeedToUpdate(ref Song Current, ref TextBlock Song, ref TextBlock DJ, ref TextBlock Listeners, ref TextBlock CurrentTime, ref TextBlock EndTime)
+        /// <param name="Sldr"></param>
+        public static void NeedToUpdate(ref Song Current, ref TextBlock Song, ref TextBlock DJ, ref TextBlock Listeners, ref TextBlock CurrentTime, ref TextBlock EndTime, ref Slider Sldr)
         {
             if (Current.TickerAndUpdate() || !_hasStarted)
             {
@@ -36,11 +37,14 @@ namespace Radio
                 Listeners.Text = Current.Listeners.ToString();
                 CurrentTime.Text = Current.CurrentTime;
                 EndTime.Text = Current.EndTime;
+                Sldr.Maximum = Current.DoubleEndTime;
+                Sldr.Value = 0;
                 _hasStarted = true;
             }
             else
             {
                 CurrentTime.Text = Current.CurrentTime;
+                Sldr.Value = Current.DoubleCurrentTime;
             }
         }
     }

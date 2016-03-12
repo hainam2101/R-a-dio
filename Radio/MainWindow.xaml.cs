@@ -39,11 +39,11 @@ namespace Radio
             // Call it here, otherwise it will take 1 more second to show data because Tick.
             Updater.NeedToUpdate(ref playingNow, ref textBlockSongValue,
                     ref textBlockDJValue, ref textBlockListenersValue,
-                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue);
+                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider);
 
             t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(ref playingNow, ref textBlockSongValue,
                     ref textBlockDJValue, ref textBlockListenersValue,
-                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue));
+                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider));
             t.Start();
         }
     }
