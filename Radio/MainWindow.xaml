@@ -13,11 +13,15 @@
         <TextBlock x:Name="textBlockDJValue" HorizontalAlignment="Left" Margin="71,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>
         <TextBlock x:Name="textBlockListeners" HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="Wrap" Text="Listeners:" VerticalAlignment="Top" Height="22" Width="56"/>
         <TextBlock x:Name="textBlockListenersValue" HorizontalAlignment="Left" Margin="71,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>
-        <TextBlock x:Name="textBlockCurrentTime" HorizontalAlignment="Left" Margin="10,127,0,0" TextWrapping="Wrap" Text="Current second:" VerticalAlignment="Top" Height="22" Width="91"/>
-        <TextBlock x:Name="textBlockCurrentTimeValue" HorizontalAlignment="Left" Margin="106,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="401"><Run Text=""/></TextBlock>
-        <TextBlock x:Name="textBlockEndTimeSeconds" HorizontalAlignment="Left" Margin="10,154,0,0" TextWrapping="Wrap" Text="Duration Seconds:" VerticalAlignment="Top" Height="22" Width="111"/>
-        <TextBlock x:Name="textBlockEndTimeSecondsValue" HorizontalAlignment="Left" Margin="121,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="381"><Run Text=""/></TextBlock>
+        
+        <TextBlock x:Name="textBlockCurrentTimeValue" HorizontalAlignment="Left" Margin="22,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="35"><Run Text=""/></TextBlock>
+        <Label Target="{Binding ElementName=buttonPlay}" FontSize=".1" Margin="10,217,491,87">>_Play</Label>
+        <Button x:Name="buttonPlay" Content="Play" HorizontalAlignment="Left" Margin="151,156,0,0" VerticalAlignment="Top" Width="75" Click="buttonPlay_Click"/>
+        <Label Target="{Binding ElementName=buttonStop}" FontSize=".1" Margin="10,237,501,72">>_Stop</Label>
+        <Button x:Name="buttonStop" Content="Stop" HorizontalAlignment="Left" Margin="289,156,0,0" VerticalAlignment="Top" Width="75" Click="buttonStop_Click"/>
+        <TextBlock x:Name="textBlockEndTimeSecondsValue" HorizontalAlignment="Left" Margin="467,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="35"><Run Text=""/></TextBlock>
         <Slider x:Name="slider" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="492"/>
+        
 
 
     </Grid>

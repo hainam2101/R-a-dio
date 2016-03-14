@@ -17,7 +17,7 @@ namespace Radio
     /// TODO: Get DJ image with XHTTP?
     /// OK!: Convert seconds to Min:Seconds
 
-    class Song : Timer
+    class Song
     {
         public string Name { get; set; }
         public string Dj { get; set; }

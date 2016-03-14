@@ -29,8 +29,12 @@ namespace Radio
             RadioUpdater();
         }
 
+        Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
+
         void RadioUpdater()
         {
+            
+
             Timer t = new Timer();
             t.Interval = 1000;
             Song playingNow = new Song();
@@ -45,6 +49,16 @@ namespace Radio
                     ref textBlockDJValue, ref textBlockListenersValue,
                     ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider));
             t.Start();
+        }
+
+        private void buttonPlay_Click(object sender, RoutedEventArgs e)
+        {
+            StreamMp3.buttonPlay_Click(sender, e);
+        }
+
+        private void buttonStop_Click(object sender, RoutedEventArgs e)
+        {
+            StreamMp3.buttonStop_Click(sender, e);
         }
     }
 }
