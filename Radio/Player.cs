@@ -19,16 +19,6 @@ namespace Radio
             Paused
         }
 
-        /*public MainWindow()
-        {
-            InitializeComponent();
-            comboUrl.SelectedIndex = 0;
-            mediaElement.LoadedBehavior = MediaState.Manual;
-            mediaElement.MediaOpened += OnMediaOpened;
-            mediaElement.MediaFailed += OnMediaFailed;
-            timer1.Interval = 250;
-            timer1.Tick += timer1_Tick;
-        }*/
         // Fields
         private BufferedWaveProvider bufferedWaveProvider;
         private IWavePlayer waveOut;
@@ -38,6 +28,7 @@ namespace Radio
         private VolumeWaveProvider16 volumeProvider;
         private System.Windows.Forms.Timer timer1 = new System.Windows.Forms.Timer();
         private string Url {get; set;}
+
         // Constructors
         public Player(string StreamUrlMp3)
         {
@@ -45,26 +36,6 @@ namespace Radio
             timer1.Tick += timer1_Tick;
             Url = StreamUrlMp3;
         }
-
-        /*private void StopClick(object sender, RoutedEventArgs e)
-        {
-            mediaElement.Stop();
-        }
-
-        private void RewindClick(object sender, RoutedEventArgs e)
-        {
-            mediaElement.Position = TimeSpan.Zero;
-        }
-
-        void OnMediaFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-            textdebug.Text = e.ErrorException.Message;
-        }*/
-
-        /*void OnMediaOpened(object sender, RoutedEventArgs routedEventArgs)
-        {
-            labelDuration.Content = mediaElement.NaturalDuration.ToString();
-        }*/
 
         private void StreamMp3(object state)
         {

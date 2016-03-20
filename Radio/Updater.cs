@@ -16,7 +16,7 @@ namespace Radio
     static class Updater
     {
         static bool _hasStarted = false;
-
+        /// TODO: Update description.
         /// <summary>
         /// Calls the counter update, and checks the _hasStarted variable to run the if for the first time.
         /// </summary>
@@ -28,7 +28,7 @@ namespace Radio
         /// <param name="CurrentTime"></param>
         /// <param name="EndTime"></param>
         /// <param name="Sldr"></param>
-        public static void NeedToUpdate(ref Song Current, ref TextBlock Song, ref TextBlock DJ, ref TextBlock Listeners, ref TextBlock CurrentTime, ref TextBlock EndTime, ref Slider Sldr)
+        public static void NeedToUpdate(ref Song Current, ref TextBlock Song, ref TextBlock DJ, ref TextBlock Listeners, ref TextBlock CurrentTime, ref TextBlock EndTime, ref Slider Sldr, ref Image Img)
         {
             if (Current.TickerAndUpdate() || !_hasStarted)
             {
@@ -39,6 +39,9 @@ namespace Radio
                 EndTime.Text = Current.EndTime;
                 Sldr.Maximum = Current.DoubleEndTime;
                 Sldr.Value = 0;
+                Current.Image.IsNewDjPlaying(Current.DjId);
+                Current.Image.LoadNewImage();
+                Img.Source = Current.Image.Image;
                 _hasStarted = true;
             }
             else

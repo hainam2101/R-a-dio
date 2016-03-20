@@ -7,21 +7,23 @@
         mc:Ignorable="d"
         Title="Radio" Height="350" Width="525">
     <Grid>
-        <TextBlock x:Name="textBlockSong" HorizontalAlignment="Left" Margin="10,46,0,0" TextWrapping="Wrap" Text="Song:" VerticalAlignment="Top" Height="22" Width="38"/>
-        <TextBlock x:Name="textBlockSongValue" HorizontalAlignment="Left" Margin="71,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>
-        <TextBlock x:Name="textBlockDJ" HorizontalAlignment="Left" Margin="10,73,0,0" TextWrapping="Wrap" Text="DJ:" VerticalAlignment="Top" Height="22" Width="38"/>
-        <TextBlock x:Name="textBlockDJValue" HorizontalAlignment="Left" Margin="71,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>
+        <TextBlock x:Name="textBlockSong" HorizontalAlignment="Left" Margin="10,73,0,0" TextWrapping="Wrap" Text="Song:" VerticalAlignment="Top" Height="22" Width="38"/>
+        <TextBlock x:Name="textBlockSongValue" HorizontalAlignment="Left" Margin="71,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>
+        <!--<TextBlock x:Name="textBlockDJ" HorizontalAlignment="Left" Margin="10,73,0,0" TextWrapping="Wrap" Text="DJ:" VerticalAlignment="Top" Height="22" Width="38"/>-->
+        <!--<TextBlock x:Name="textBlockDJValue" HorizontalAlignment="Left" Margin="71,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>-->
         <TextBlock x:Name="textBlockListeners" HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="Wrap" Text="Listeners:" VerticalAlignment="Top" Height="22" Width="56"/>
         <TextBlock x:Name="textBlockListenersValue" HorizontalAlignment="Left" Margin="71,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>
         
         <TextBlock x:Name="textBlockCurrentTimeValue" HorizontalAlignment="Left" Margin="22,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="35"><Run Text=""/></TextBlock>
         <Label Target="{Binding ElementName=buttonPlay}" FontSize=".1" Margin="10,217,491,87">>_Play</Label>
-        <Button x:Name="buttonPlay" Content="Play" HorizontalAlignment="Left" Margin="151,156,0,0" VerticalAlignment="Top" Width="75" Click="buttonPlay_Click"/>
+        <Button x:Name="buttonPlay" Content="Play" HorizontalAlignment="Left" Margin="71,156,0,0" VerticalAlignment="Top" Width="75" Click="buttonPlay_Click"/>
         <Label Target="{Binding ElementName=buttonStop}" FontSize=".1" Margin="10,237,501,72">>_Stop</Label>
-        <Button x:Name="buttonStop" Content="Stop" HorizontalAlignment="Left" Margin="289,156,0,0" VerticalAlignment="Top" Width="75" Click="buttonStop_Click"/>
-        <TextBlock x:Name="textBlockEndTimeSecondsValue" HorizontalAlignment="Left" Margin="467,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="35"><Run Text=""/></TextBlock>
-        <Slider x:Name="slider" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="492"/>
-        
+        <Button x:Name="buttonStop" Content="Stop" HorizontalAlignment="Left" Margin="221,156,0,0" VerticalAlignment="Top" Width="75" Click="buttonStop_Click"/>
+        <TextBlock x:Name="textBlockEndTimeSecondsValue" HorizontalAlignment="Left" Margin="311,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="35"><Run Text=""/></TextBlock>
+        <Slider x:Name="slider" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="354"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="402,122,0,0" VerticalAlignment="Top" Width="100" RenderOptions.BitmapScalingMode="HighQuality"/>
+        <TextBlock x:Name="textBlockDJValue" HorizontalAlignment="Left" Margin="422,231,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+
 
 
     </Grid>

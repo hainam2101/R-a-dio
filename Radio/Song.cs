@@ -7,26 +7,27 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using System.Windows;
-
+using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace Radio
 {
-    /// OK!: Auto-update
     /// TODO: Get DJ image with XHTTP?
-    /// OK!: Convert seconds to Min:Seconds
-
+    /// TODO: Get album image from last.fm
+    /// TODO: Make scrobbling to last.fm possible.
     class Song
     {
         public string Name { get; set; }
         public string Dj { get; set; }
+        public string DjId { get; private set; }
         public int Listeners { get; set; }
 
         private int _startTime;
         private int _endTime;
         private int _currentTime;
 
+        public DjImage Image;
         /// <summary>
         /// CurrentTime holds the current second of the song playing.
         /// </summary>
@@ -76,7 +77,10 @@ namespace Radio
             private set { }
         }
 
-        public Song() { }
+        public Song()
+        {
+            Image = new DjImage();
+        }
 
         /// <summary>
         /// Calculates the total seconds.
@@ -127,6 +131,7 @@ namespace Radio
                 StartTime = jsonData.main.start_time;
                 CurrentTime = jsonData.main.current;
                 EndTime = jsonData.main.end_time;
+                DjId = jsonData.main.dj.id;
             }
             catch (Exception)
             {
