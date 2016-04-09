@@ -34,20 +34,17 @@ namespace Radio
         void RadioUpdater()
         {
             
-
             Timer t = new Timer();
-            t.Interval = 1000;
+            t.Interval = (int) Player.TickMode.NormalMode;
             Song playingNow = new Song();
-            playingNow.GetDatafromApi();
 
-            // Call it here, otherwise it will take 1 more second to show data because Tick.
-            Updater.NeedToUpdate(ref playingNow, ref textBlockSongValue,
-                    ref textBlockDJValue, ref textBlockListenersValue,
-                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider, ref image);
+            Updater.NeedToUpdate(playingNow, textBlockSongValue,
+                     textBlockDJValue, textBlockListenersValue,
+                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t);
 
-            t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(ref playingNow, ref textBlockSongValue,
-                    ref textBlockDJValue, ref textBlockListenersValue,
-                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider, ref image));
+            t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(playingNow, textBlockSongValue,
+                     textBlockDJValue, textBlockListenersValue,
+                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t));
             t.Start();
         }
 

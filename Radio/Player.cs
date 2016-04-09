@@ -11,6 +11,11 @@ namespace Radio
 {
     class Player
     {
+        public enum TickMode
+        {
+            NormalMode = 1000
+        }
+
         enum StreamingPlaybackState
         {
             Stopped,
