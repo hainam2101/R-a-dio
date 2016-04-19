@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Net;
 using System.Windows.Forms;
 
 namespace Radio
@@ -29,23 +30,32 @@ namespace Radio
             RadioUpdater();
         }
 
+        HandleException myerr;
+        
         Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
 
         void RadioUpdater()
         {
-            
+            myerr += NoInternetWebException_Handler;
             Timer t = new Timer();
-            t.Interval = (int) Player.TickMode.NormalMode;
+            t.Interval = (int)Player.TickMode.NormalMode;
             Song playingNow = new Song();
-
-            Updater.NeedToUpdate(playingNow, textBlockSongValue,
+            try
+            {
+                /*Updater.NeedToUpdate(playingNow, textBlockSongValue,
                      textBlockDJValue, textBlockListenersValue,
-                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t);
+                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t, myerr);*/
 
             t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(playingNow, textBlockSongValue,
                      textBlockDJValue, textBlockListenersValue,
-                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t));
-            t.Start();
+                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t, myerr));
+           
+                t.Start();
+           }
+           catch (Exception)
+           {
+                System.Windows.MessageBox.Show("Couldn't connect to server", "WebException", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void buttonPlay_Click(object sender, RoutedEventArgs e)
@@ -57,5 +67,11 @@ namespace Radio
         {
             StreamMp3.buttonStop_Click(sender, e);
         }
+
+        private void NoInternetWebException_Handler()
+        {
+            System.Windows.MessageBox.Show("Couldn't connect to server", "WebException", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
     }
 }

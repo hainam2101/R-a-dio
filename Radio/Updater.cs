@@ -27,11 +27,13 @@ namespace Radio
         /// <param name="CurrentTime"></param>
         /// <param name="EndTime"></param>
         /// <param name="Sldr"></param>
-        public static async void NeedToUpdate(Song Current, TextBlock Song, TextBlock DJ, TextBlock Listeners, TextBlock CurrentTime, TextBlock EndTime, Slider Sldr, Image Img, Timer timer)
+        public static async void NeedToUpdate(Song Current, TextBlock Song, TextBlock DJ, TextBlock Listeners, TextBlock CurrentTime, TextBlock EndTime, Slider Sldr, Image Img, Timer timer, HandleException err)
         {   
-            if (Current.ShouldUpdateSong() || !_hasStarted)
+            if (Current.ShouldUpdateSong() /*|| !_hasStarted*/)
             {
-                await Current.GetNewSongData();
+
+                await Current.GetNewSongData(err);
+                
                 Song.Text = Current.Name;
                 DJ.Text = Current.Dj;
                 Listeners.Text = Current.Listeners.ToString();

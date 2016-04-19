@@ -64,6 +64,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DjImage.cs" />
+    <Compile Include="ErrorMsg.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="ReadyFullStream.cs" />
     <Compile Include="Song.cs" />

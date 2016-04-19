@@ -100,7 +100,7 @@ namespace Radio
         /// This function gets the data from r/a/dio api by doing an HTTP request.
         /// It updates the "important" fields od the class.
         /// </summary>
-        public Task GetNewSongData()
+        public Task GetNewSongData(HandleException handle)
         {
             Task t = Task.Run(() =>
             {
@@ -135,7 +135,10 @@ namespace Radio
                 }
                 catch (Exception)
                 {
-                    throw;
+                    if (handle != null)
+                    {
+                        handle();
+                    }
                 }
             });
             return t;
