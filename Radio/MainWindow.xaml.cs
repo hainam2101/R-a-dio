@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using System.Net;
 using System.Windows.Forms;
 
 namespace Radio
@@ -30,66 +29,23 @@ namespace Radio
             RadioUpdater();
         }
 
-        HandleException myerr;
-        
         Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
 
         void RadioUpdater()
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            myerr += NoInternetWebException_Handler;
+            
             Timer t = new Timer();
-            t.Interval = (int)Player.TickMode.NormalMode;
+            t.Interval = (int) Player.TickMode.NormalMode;
             Song playingNow = new Song();
-            try
-            {
-                /*Updater.NeedToUpdate(playingNow, textBlockSongValue,
+
+            Updater.NeedToUpdate(playingNow, textBlockSongValue,
                      textBlockDJValue, textBlockListenersValue,
-                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t, myerr);*/
+                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t);
 
             t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(playingNow, textBlockSongValue,
                      textBlockDJValue, textBlockListenersValue,
-                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t, myerr));
-           
-                t.Start();
-           }
-           catch (Exception)
-           {
-                System.Windows.MessageBox.Show("Couldn't connect to server", "WebException", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-=======
-            
-
-            Timer t = new Timer();
-            t.Interval = 1000;
-            Song playingNow = new Song();
-            playingNow.GetDatafromApi();
-
-            // Call it here, otherwise it will take 1 more second to show data because Tick.
-            Updater.NeedToUpdate(ref playingNow, ref textBlockSongValue,
-                    ref textBlockDJValue, ref textBlockListenersValue,
-                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider, ref image);
-
-=======
-            
-
-            Timer t = new Timer();
-            t.Interval = 1000;
-            Song playingNow = new Song();
-            playingNow.GetDatafromApi();
-
-            // Call it here, otherwise it will take 1 more second to show data because Tick.
-            Updater.NeedToUpdate(ref playingNow, ref textBlockSongValue,
-                    ref textBlockDJValue, ref textBlockListenersValue,
-                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider, ref image);
-
->>>>>>> parent of 32e932c... Better responsiveness
-            t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(ref playingNow, ref textBlockSongValue,
-                    ref textBlockDJValue, ref textBlockListenersValue,
-                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider, ref image));
+                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t));
             t.Start();
->>>>>>> parent of 32e932c... Better responsiveness
         }
 
         private void buttonPlay_Click(object sender, RoutedEventArgs e)
@@ -101,11 +57,5 @@ namespace Radio
         {
             StreamMp3.buttonStop_Click(sender, e);
         }
-
-        private void NoInternetWebException_Handler()
-        {
-            System.Windows.MessageBox.Show("Couldn't connect to server", "WebException", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
     }
 }

@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
-
+//using System.Threading;
+using System.Windows.Forms;
 using System.Windows.Controls;
 
 namespace Radio
 {
     /// <summary>
-    /// Serves to update the TextBox in the application, and also calls the update counter
-    /// of the Song object (TickerAndUpdate())
+    /// Serves to update the TextBoxes in the application.
     /// </summary>
     static class Updater
     {
         static bool _hasStarted = false;
-        /// TODO: Update description.
         /// <summary>
-        /// Calls the counter update, and checks the _hasStarted variable to run the if for the first time.
+        /// Checks if the songs has finished to update the showed data, if not, just update the slider.
+        /// Note: The _hasStarted var serves to allow to fetch the data for the first time (aka, when running the app).
         /// </summary>
         /// <param name="Current"></param>
         /// <param name="Song"></param>
@@ -28,26 +27,11 @@ namespace Radio
         /// <param name="CurrentTime"></param>
         /// <param name="EndTime"></param>
         /// <param name="Sldr"></param>
-<<<<<<< HEAD
-<<<<<<< HEAD
-        public static async void NeedToUpdate(Song Current, TextBlock Song, TextBlock DJ, TextBlock Listeners, TextBlock CurrentTime, TextBlock EndTime, Slider Sldr, Image Img, Timer timer, HandleException err)
+        public static async void NeedToUpdate(Song Current, TextBlock Song, TextBlock DJ, TextBlock Listeners, TextBlock CurrentTime, TextBlock EndTime, Slider Sldr, Image Img, Timer timer)
         {   
-            if (Current.ShouldUpdateSong() /*|| !_hasStarted*/)
+            if (Current.ShouldUpdateSong() || !_hasStarted)
             {
-
-                await Current.GetNewSongData(err);
-                
-=======
-=======
->>>>>>> parent of 32e932c... Better responsiveness
-        public static void NeedToUpdate(ref Song Current, ref TextBlock Song, ref TextBlock DJ, ref TextBlock Listeners, ref TextBlock CurrentTime, ref TextBlock EndTime, ref Slider Sldr, ref Image Img)
-        {
-            if (Current.TickerAndUpdate() || !_hasStarted)
-            {
-<<<<<<< HEAD
->>>>>>> parent of 32e932c... Better responsiveness
-=======
->>>>>>> parent of 32e932c... Better responsiveness
+                await Current.GetNewSongData();
                 Song.Text = Current.Name;
                 DJ.Text = Current.Dj;
                 Listeners.Text = Current.Listeners.ToString();
