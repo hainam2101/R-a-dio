@@ -37,6 +37,7 @@ namespace Radio
         void RadioUpdater()
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             myerr += NoInternetWebException_Handler;
             Timer t = new Timer();
             t.Interval = (int)Player.TickMode.NormalMode;
@@ -70,6 +71,20 @@ namespace Radio
                     ref textBlockDJValue, ref textBlockListenersValue,
                     ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider, ref image);
 
+=======
+            
+
+            Timer t = new Timer();
+            t.Interval = 1000;
+            Song playingNow = new Song();
+            playingNow.GetDatafromApi();
+
+            // Call it here, otherwise it will take 1 more second to show data because Tick.
+            Updater.NeedToUpdate(ref playingNow, ref textBlockSongValue,
+                    ref textBlockDJValue, ref textBlockListenersValue,
+                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider, ref image);
+
+>>>>>>> parent of 32e932c... Better responsiveness
             t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(ref playingNow, ref textBlockSongValue,
                     ref textBlockDJValue, ref textBlockListenersValue,
                     ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider, ref image));

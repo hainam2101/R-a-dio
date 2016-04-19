@@ -29,6 +29,7 @@ namespace Radio
         /// <param name="EndTime"></param>
         /// <param name="Sldr"></param>
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static async void NeedToUpdate(Song Current, TextBlock Song, TextBlock DJ, TextBlock Listeners, TextBlock CurrentTime, TextBlock EndTime, Slider Sldr, Image Img, Timer timer, HandleException err)
         {   
             if (Current.ShouldUpdateSong() /*|| !_hasStarted*/)
@@ -37,10 +38,15 @@ namespace Radio
                 await Current.GetNewSongData(err);
                 
 =======
+=======
+>>>>>>> parent of 32e932c... Better responsiveness
         public static void NeedToUpdate(ref Song Current, ref TextBlock Song, ref TextBlock DJ, ref TextBlock Listeners, ref TextBlock CurrentTime, ref TextBlock EndTime, ref Slider Sldr, ref Image Img)
         {
             if (Current.TickerAndUpdate() || !_hasStarted)
             {
+<<<<<<< HEAD
+>>>>>>> parent of 32e932c... Better responsiveness
+=======
 >>>>>>> parent of 32e932c... Better responsiveness
                 Song.Text = Current.Name;
                 DJ.Text = Current.Dj;

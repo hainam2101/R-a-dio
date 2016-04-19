@@ -101,7 +101,11 @@ namespace Radio
         /// It updates the "important" fields od the class.
         /// </summary>
 <<<<<<< HEAD
+<<<<<<< HEAD
         public Task GetNewSongData(HandleException handle)
+=======
+        public void GetDatafromApi()
+>>>>>>> parent of 32e932c... Better responsiveness
 =======
         public void GetDatafromApi()
 >>>>>>> parent of 32e932c... Better responsiveness
@@ -130,6 +134,7 @@ namespace Radio
                 dynamic jsonData = JsonConvert.DeserializeObject(rawPage);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                     Name = jsonData.main.np;
                     Dj = jsonData.main.dj.djname;
                     Listeners = jsonData.main.listeners;
@@ -148,6 +153,8 @@ namespace Radio
             });
             return t;
 =======
+=======
+>>>>>>> parent of 32e932c... Better responsiveness
                 Name = jsonData.main.np;
                 Dj = jsonData.main.dj.djname;
                 Listeners = jsonData.main.listeners;
@@ -160,6 +167,9 @@ namespace Radio
             {
                 throw;
             }
+<<<<<<< HEAD
+>>>>>>> parent of 32e932c... Better responsiveness
+=======
 >>>>>>> parent of 32e932c... Better responsiveness
         }
 
