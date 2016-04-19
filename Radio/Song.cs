@@ -13,6 +13,7 @@ using System.Windows.Forms;
 
 namespace Radio
 {
+    /// TODO: Get DJ image with XHTTP?
     /// TODO: Get album image from last.fm
     /// TODO: Make scrobbling to last.fm possible.
     class Song
@@ -27,7 +28,6 @@ namespace Radio
         private int _currentTime;
 
         public DjImage Image;
-
         /// <summary>
         /// CurrentTime holds the current second of the song playing.
         /// </summary>
@@ -100,31 +100,36 @@ namespace Radio
         /// This function gets the data from r/a/dio api by doing an HTTP request.
         /// It updates the "important" fields od the class.
         /// </summary>
+<<<<<<< HEAD
         public Task GetNewSongData(HandleException handle)
+=======
+        public void GetDatafromApi()
+>>>>>>> parent of 32e932c... Better responsiveness
         {
-            Task t = Task.Run(() =>
+            try
             {
-                try
-                {
-                    HttpWebRequest pageRequest = (HttpWebRequest)WebRequest.Create("https://r-a-d.io/api");
-                    pageRequest.Method = "GET";
+                HttpWebRequest pageRequest = (HttpWebRequest)WebRequest.Create("https://r-a-d.io/api");
+                pageRequest.Method = "GET";
 
-                    pageRequest.KeepAlive = false;
+                pageRequest.KeepAlive = false;
 
-                    HttpWebResponse pageResponse = (HttpWebResponse)pageRequest.GetResponse();
+                HttpWebResponse pageResponse = (HttpWebResponse)pageRequest.GetResponse();
+                //Console.WriteLine("pageRequest.Headers is: {0}", pageRequest.Headers);
+                //Response = pageRequest.Headers.ToString();
 
-                    Stream streamResponse = pageResponse.GetResponseStream();
-                    StreamReader streamRead = new StreamReader(streamResponse);
+                Stream streamResponse = pageResponse.GetResponseStream();
+                StreamReader streamRead = new StreamReader(streamResponse);
 
-                    string rawPage = streamRead.ReadToEnd();
+                string rawPage = streamRead.ReadToEnd();
 
-                    pageResponse.Close();
-                    streamResponse.Close();
-                    streamRead.Close();
+                pageResponse.Close();
+                streamResponse.Close();
+                streamRead.Close();
 
 
-                    dynamic jsonData = JsonConvert.DeserializeObject(rawPage);
+                dynamic jsonData = JsonConvert.DeserializeObject(rawPage);
 
+<<<<<<< HEAD
                     Name = jsonData.main.np;
                     Dj = jsonData.main.dj.djname;
                     Listeners = jsonData.main.listeners;
@@ -142,22 +147,36 @@ namespace Radio
                 }
             });
             return t;
+=======
+                Name = jsonData.main.np;
+                Dj = jsonData.main.dj.djname;
+                Listeners = jsonData.main.listeners;
+                StartTime = jsonData.main.start_time;
+                CurrentTime = jsonData.main.current;
+                EndTime = jsonData.main.end_time;
+                DjId = jsonData.main.dj.id;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+>>>>>>> parent of 32e932c... Better responsiveness
         }
 
         // WARNING: Remember: there's a bug when a DJ is playing, sometimes CurrentTime ends up being a lot more than
-        // EndTime (since EndTime is 0:00); that will cause to call GetNewSongData() every second, which
+        // EndTime (since EndTime is 0:00); that will cause to call GetDatafromApi() every second, which
         // is not very performance wise!
-        // But since that runs on other thread it doesn't causes a glitch in the audio play.
         /// <summary>
-        /// Updated the _currentTime counter, returning true if the song has finished therefore needs to update.
-        /// false otherwise.
+        /// Updated the _currentTime counter, checks if song has ended, and if so calls GetDataFromApi() and returns
+        /// true. False otherwise.
         /// </summary>
         /// <returns></returns>
-        public bool ShouldUpdateSong()
+        public bool TickerAndUpdate()
         {
             ++_currentTime;
             if (_currentTime >= _endTime)
             {
+                this.GetDatafromApi();
                 return true;
             }
             return false;

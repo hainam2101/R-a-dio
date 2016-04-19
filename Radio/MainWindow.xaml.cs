@@ -36,6 +36,7 @@ namespace Radio
 
         void RadioUpdater()
         {
+<<<<<<< HEAD
             myerr += NoInternetWebException_Handler;
             Timer t = new Timer();
             t.Interval = (int)Player.TickMode.NormalMode;
@@ -56,6 +57,24 @@ namespace Radio
            {
                 System.Windows.MessageBox.Show("Couldn't connect to server", "WebException", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+=======
+            
+
+            Timer t = new Timer();
+            t.Interval = 1000;
+            Song playingNow = new Song();
+            playingNow.GetDatafromApi();
+
+            // Call it here, otherwise it will take 1 more second to show data because Tick.
+            Updater.NeedToUpdate(ref playingNow, ref textBlockSongValue,
+                    ref textBlockDJValue, ref textBlockListenersValue,
+                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider, ref image);
+
+            t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(ref playingNow, ref textBlockSongValue,
+                    ref textBlockDJValue, ref textBlockListenersValue,
+                    ref textBlockCurrentTimeValue, ref textBlockEndTimeSecondsValue, ref slider, ref image));
+            t.Start();
+>>>>>>> parent of 32e932c... Better responsiveness
         }
 
         private void buttonPlay_Click(object sender, RoutedEventArgs e)
