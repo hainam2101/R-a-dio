@@ -100,62 +100,45 @@ namespace Radio
         /// This function gets the data from r/a/dio api by doing an HTTP request.
         /// It updates the "important" fields od the class.
         /// </summary>
-        public async Task GetNewSongData()
+        public Task GetNewSongData()
         {
-            /*Task t = new Task(() =>
+            Task t = Task.Run(() =>
             {
                 try
-                {*/
-            // code from test
+                {
+                    HttpWebRequest pageRequest = (HttpWebRequest)WebRequest.Create("https://r-a-d.io/api");
+                    pageRequest.Method = "GET";
 
-            /*catch (Exception)
-            {
-                throw;
-            }
-        }).Start();*/
-            //await t;
-            //t.Wait();
-            //t.Start();
-            //await t;
+                    pageRequest.KeepAlive = false;
 
-            // new test
-            //new Task(() => { Test(); }).Start();
-            await Test();
-        }
+                    HttpWebResponse pageResponse = (HttpWebResponse)pageRequest.GetResponse();
 
-         async Task Test()
-        {
-            //await Task.Delay(100);
-             await Task.Factory.StartNew(() =>
-            {
-                HttpWebRequest pageRequest = (HttpWebRequest)WebRequest.Create("https://r-a-d.io/api");
-                pageRequest.Method = "GET";
+                    Stream streamResponse = pageResponse.GetResponseStream();
+                    StreamReader streamRead = new StreamReader(streamResponse);
 
-                pageRequest.KeepAlive = false;
+                    string rawPage = streamRead.ReadToEnd();
 
-                HttpWebResponse pageResponse = (HttpWebResponse)pageRequest.GetResponse();
-
-                Stream streamResponse = pageResponse.GetResponseStream();
-                StreamReader streamRead = new StreamReader(streamResponse);
-
-                string rawPage = streamRead.ReadToEnd();
-
-                pageResponse.Close();
-                streamResponse.Close();
-                streamRead.Close();
+                    pageResponse.Close();
+                    streamResponse.Close();
+                    streamRead.Close();
 
 
-                dynamic jsonData = JsonConvert.DeserializeObject(rawPage);
+                    dynamic jsonData = JsonConvert.DeserializeObject(rawPage);
 
-                Name = jsonData.main.np;
-                Dj = jsonData.main.dj.djname;
-                Listeners = jsonData.main.listeners;
-                StartTime = jsonData.main.start_time;
-                CurrentTime = jsonData.main.current;
-                EndTime = jsonData.main.end_time;
-                DjId = jsonData.main.dj.id;
+                    Name = jsonData.main.np;
+                    Dj = jsonData.main.dj.djname;
+                    Listeners = jsonData.main.listeners;
+                    StartTime = jsonData.main.start_time;
+                    CurrentTime = jsonData.main.current;
+                    EndTime = jsonData.main.end_time;
+                    DjId = jsonData.main.dj.id;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             });
-            // t;
+            return t;
         }
 
         // WARNING: Remember: there's a bug when a DJ is playing, sometimes CurrentTime ends up being a lot more than

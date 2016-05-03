@@ -31,14 +31,7 @@ namespace Radio
         {   
             if (Current.ShouldUpdateSong() || !_hasStarted)
             {
-                try
-                {
-                    await Current.GetNewSongData();
-                }
-                catch (Exception err)
-                {
-                    MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                await Current.GetNewSongData();
                 Song.Text = Current.Name;
                 DJ.Text = Current.Dj;
                 Listeners.Text = Current.Listeners.ToString();
