@@ -36,7 +36,13 @@ namespace Radio
                 await Current.GetNewSongData(errorWhileFetching);
                 if (errorWhileFetching.WasRaised)
                 {
-                    MessageBox.Show(errorWhileFetching.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    timer.Stop();
+                    DialogResult response;
+                    response = MessageBox.Show(errorWhileFetching.Error.Message + "\nDo you wanna retry?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    if (response == DialogResult.Yes)
+                    {
+                        timer.Start();
+                    }
                     errorWhileFetching.WasRaised = false;
                 }
                 Song.Text = Current.Name;
