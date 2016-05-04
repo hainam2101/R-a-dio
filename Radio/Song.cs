@@ -100,7 +100,7 @@ namespace Radio
         /// This function gets the data from r/a/dio api by doing an HTTP request.
         /// It updates the "important" fields od the class.
         /// </summary>
-        public Task GetNewSongData()
+        public Task GetNewSongData(AsyncException<Exception> excp)
         {
             Task t = Task.Run(() =>
             {
@@ -133,9 +133,10 @@ namespace Radio
                     EndTime = jsonData.main.end_time;
                     DjId = jsonData.main.dj.id;
                 }
-                catch (Exception)
+                catch (Exception err)
                 {
-                    throw;
+                    excp.WasRaised = true;
+                    excp.Error = err;
                 }
             });
             return t;

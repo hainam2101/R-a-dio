@@ -15,6 +15,8 @@ namespace Radio
     static class Updater
     {
         static bool _hasStarted = false;
+        static AsyncException<Exception> errorWhileFetching = new AsyncException<Exception>();
+
         /// <summary>
         /// Checks if the songs has finished to update the showed data, if not, just update the slider.
         /// Note: The _hasStarted var serves to allow to fetch the data for the first time (aka, when running the app).
@@ -31,7 +33,12 @@ namespace Radio
         {   
             if (Current.ShouldUpdateSong() || !_hasStarted)
             {
-                await Current.GetNewSongData();
+                await Current.GetNewSongData(errorWhileFetching);
+                if (errorWhileFetching.WasRaised)
+                {
+                    MessageBox.Show(errorWhileFetching.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    errorWhileFetching.WasRaised = false;
+                }
                 Song.Text = Current.Name;
                 DJ.Text = Current.Dj;
                 Listeners.Text = Current.Listeners.ToString();
