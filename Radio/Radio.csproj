@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AsyncException.cs" />
     <Compile Include="DjImage.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="ReadyFullStream.cs" />
