@@ -66,6 +66,7 @@
     <Compile Include="AsyncException.cs" />
     <Compile Include="DjImage.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayOrStopCommand.cs" />
     <Compile Include="ReadyFullStream.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="Updater.cs" />
