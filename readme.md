@@ -6,8 +6,7 @@ A work in progress
     Json.Net (http://www.newtonsoft.com/json)
 	NAudio   (https://naudio.codeplex.com/)
 	
-## Accelerator Keys
-    ALT + P to play
-	ALT + S to stop
+## Commands / Shortcuts
+    Space or ► ❚❚ to play or stop
 
-![](scr.png)
+![](scr4.png)

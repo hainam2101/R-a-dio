@@ -22,9 +22,19 @@ namespace Radio
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool isPlaying;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            // Initialize and bind the command for Play/Stop
+            buttonPlay.Command = PlayOrStopCommand.PlayOrStop;
+            CommandBinding binding = new CommandBinding();
+            binding.Command = PlayOrStopCommand.PlayOrStop;
+            binding.Executed += PlayOrStop_Execute;
+            binding.CanExecute += PlayOrStop_CanExecute;
+            CommandBindings.Add(binding);
 
             RadioUpdater();
         }
@@ -53,9 +63,31 @@ namespace Radio
             StreamMp3.buttonPlay_Click(sender, e);
         }
 
-        private void buttonStop_Click(object sender, RoutedEventArgs e)
+        public void PlayOrStop_Execute(object sender, ExecutedRoutedEventArgs args)
         {
-            StreamMp3.buttonStop_Click(sender, e);
+            if (isPlaying)
+            {
+                StreamMp3.buttonStop_Click(sender, args);
+                buttonPlay.Content = "Play";
+                isPlaying = false;
+            }
+            else
+            {
+                StreamMp3.buttonPlay_Click(sender, args);
+                buttonPlay.Content = "Stop";
+                isPlaying = true;
+            }
+        }
+
+        public void PlayOrStop_CanExecute(object sender, CanExecuteRoutedEventArgs args)
+        {
+            /// TODO: Add two things:
+            /// 1. Execute this command only when: internet are on and server is online.
+            /// 2. Make sure this can run only few times in a short time span; this is because
+            /// we can leave the Space button pressed and therefore calling the command a lot
+            /// of times every second. (Now I've actually tested the second one by leaving pressed
+            /// the space bar and it isn't that much of a big problem, we could leave it there)
+            args.CanExecute = true;
         }
     }
 }
