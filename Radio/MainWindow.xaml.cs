@@ -58,11 +58,6 @@ namespace Radio
             t.Start();
         }
 
-        private void buttonPlay_Click(object sender, RoutedEventArgs e)
-        {
-            StreamMp3.buttonPlay_Click(sender, e);
-        }
-
         public void PlayOrStop_Execute(object sender, ExecutedRoutedEventArgs args)
         {
             if (isPlaying)
