@@ -84,5 +84,10 @@ namespace Radio
             /// the space bar and it isn't that much of a big problem, we could leave it there)
             args.CanExecute = true;
         }
+
+        private void sliderVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            StreamMp3.ChangeVolume((float)sliderVolume.Value);
+        }
     }
 }

@@ -6,6 +6,7 @@ using NAudio.Wave;
 using System.Net;
 using System.Threading;
 using System.IO;
+using System.Windows;
 
 namespace Radio
 {
@@ -148,7 +149,7 @@ namespace Radio
                     waveOut.PlaybackStopped += OnPlaybackStopped;
                     volumeProvider = new VolumeWaveProvider16(bufferedWaveProvider);
                     /// TODO: Assign volume change
-                    //volumeProvider.Volume = (float)sliderVolume.Value;
+                    //volumeProvider.Volume = currentVolume;
                     waveOut.Init(volumeProvider);
                     //progressBarBuffer.Maximum = (int)bufferedWaveProvider.BufferDuration.TotalMilliseconds;
                 }
@@ -273,12 +274,20 @@ namespace Radio
             return "https://stream.r-a-d.io/main.mp3";
         }
         /// TODO: Update this to use volume changer
-        /*private void OnVolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        /*public void OnVolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (volumeProvider != null)
             {
-                volumeProvider.Volume = (float)sliderVolume.Value;
+                currentVolume = (float)e.OldValue;
             }
         }*/
+
+        public void ChangeVolume(float val)
+        {
+            if (volumeProvider != null)
+            {
+                volumeProvider.Volume = val;
+            }
+        }
     }
 }

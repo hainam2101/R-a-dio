@@ -19,8 +19,6 @@
         <Slider x:Name="slider" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="354"/>
         <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="402,122,0,0" VerticalAlignment="Top" Width="100" RenderOptions.BitmapScalingMode="HighQuality"/>
         <TextBlock x:Name="textBlockDJValue" HorizontalAlignment="Left" Margin="422,231,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-
-
-
+        <Slider x:Name="sliderVolume" ValueChanged="sliderVolume_ValueChanged" Orientation="Vertical" HorizontalAlignment="Left" Height="100" Minimum="0" Maximum="1" Value="1" Margin="379,209,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
