@@ -14,13 +14,11 @@
         <TextBlock x:Name="textBlockListeners" HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="Wrap" Text="Listeners:" VerticalAlignment="Top" Height="22" Width="56"/>
         <TextBlock x:Name="textBlockListenersValue" HorizontalAlignment="Left" Margin="71,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>
         <TextBlock x:Name="textBlockCurrentTimeValue" HorizontalAlignment="Left" Margin="22,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="35"><Run Text=""/></TextBlock>
-        <Button x:Name="buttonPlay" Content="Play" HorizontalAlignment="Left" Margin="150,156,0,0" VerticalAlignment="Top" Width="75" Click="buttonPlay_Click"/>
+        <Button x:Name="buttonPlay" Content="Play" HorizontalAlignment="Left" Margin="150,156,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBlock x:Name="textBlockEndTimeSecondsValue" HorizontalAlignment="Left" Margin="311,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="35"><Run Text=""/></TextBlock>
         <Slider x:Name="slider" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="354"/>
         <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="402,122,0,0" VerticalAlignment="Top" Width="100" RenderOptions.BitmapScalingMode="HighQuality"/>
         <TextBlock x:Name="textBlockDJValue" HorizontalAlignment="Left" Margin="422,231,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-
-
-
+        <Slider x:Name="sliderVolume" ValueChanged="sliderVolume_ValueChanged" Orientation="Vertical" HorizontalAlignment="Left" Height="100" Minimum="0" Maximum="1" Value="1" Margin="379,209,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

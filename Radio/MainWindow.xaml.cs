@@ -58,11 +58,6 @@ namespace Radio
             t.Start();
         }
 
-        private void buttonPlay_Click(object sender, RoutedEventArgs e)
-        {
-            StreamMp3.buttonPlay_Click(sender, e);
-        }
-
         public void PlayOrStop_Execute(object sender, ExecutedRoutedEventArgs args)
         {
             if (isPlaying)
@@ -88,6 +83,11 @@ namespace Radio
             /// of times every second. (Now I've actually tested the second one by leaving pressed
             /// the space bar and it isn't that much of a big problem, we could leave it there)
             args.CanExecute = true;
+        }
+
+        private void sliderVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            StreamMp3.ChangeVolume((float)sliderVolume.Value);
         }
     }
 }
