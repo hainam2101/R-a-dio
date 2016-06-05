@@ -6,19 +6,154 @@
         xmlns:local="clr-namespace:Radio"
         mc:Ignorable="d"
         Title="Radio" Height="350" Width="525">
-    <Grid>
-        <TextBlock x:Name="textBlockSong" HorizontalAlignment="Left" Margin="10,73,0,0" TextWrapping="Wrap" Text="Song:" VerticalAlignment="Top" Height="22" Width="38"/>
-        <TextBlock x:Name="textBlockSongValue" HorizontalAlignment="Left" Margin="71,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>
-        <!--<TextBlock x:Name="textBlockDJ" HorizontalAlignment="Left" Margin="10,73,0,0" TextWrapping="Wrap" Text="DJ:" VerticalAlignment="Top" Height="22" Width="38"/>-->
-        <!--<TextBlock x:Name="textBlockDJValue" HorizontalAlignment="Left" Margin="71,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>-->
-        <TextBlock x:Name="textBlockListeners" HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="Wrap" Text="Listeners:" VerticalAlignment="Top" Height="22" Width="56"/>
-        <TextBlock x:Name="textBlockListenersValue" HorizontalAlignment="Left" Margin="71,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="436"><Run Text=""/></TextBlock>
-        <TextBlock x:Name="textBlockCurrentTimeValue" HorizontalAlignment="Left" Margin="22,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="35"><Run Text=""/></TextBlock>
-        <Button x:Name="buttonPlay" Content="Play" HorizontalAlignment="Left" Margin="150,156,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBlock x:Name="textBlockEndTimeSecondsValue" HorizontalAlignment="Left" Margin="311,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="35"><Run Text=""/></TextBlock>
-        <Slider x:Name="slider" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="354"/>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="402,122,0,0" VerticalAlignment="Top" Width="100" RenderOptions.BitmapScalingMode="HighQuality"/>
-        <TextBlock x:Name="textBlockDJValue" HorizontalAlignment="Left" Margin="422,231,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-        <Slider x:Name="sliderVolume" ValueChanged="sliderVolume_ValueChanged" Orientation="Vertical" HorizontalAlignment="Left" Height="100" Minimum="0" Maximum="1" Value="1" Margin="379,209,0,0" VerticalAlignment="Top"/>
+    <Window.Resources>
+        <!-- Nice font -->
+        <Style x:Key="SourceSansBold">
+            <Setter Property="Control.FontFamily" Value="Resources/Fonts/#Source Sans Pro"/>
+            <Setter Property="Control.Foreground" Value="#787878"/>
+        </Style>
+
+        <!-- Play/Pause Button-->
+        <ControlTemplate x:Key="PlayOrPause" TargetType="CheckBox">
+            <Image Name="Icon" Source="{Binding Path=(local:Icons.Image), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type CheckBox}}}" Width="17" Height="17" RenderOptions.BitmapScalingMode="Fant"/>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Content" Value="Stop">
+                    <Setter TargetName="Icon" Property="Source" Value="{Binding Path=(local:IconsSelected.ImageSelected), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type CheckBox}}}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        
+        <!-- Custom Volume Slider -->
+        <Style x:Key="sliderThumb" TargetType="Thumb">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Ellipse Height="10" Width="10" Margin="0,1,0,0">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="Resources/Images/SliderThumb.png"></ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SliderRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Rectangle Fill="Transparent"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="sliderVol" TargetType="Slider">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border x:Name="TrackBackground"
+                Grid.Row="1"
+                Margin="5,0"
+                BorderThickness="2"
+                BorderBrush="#787878"
+                VerticalAlignment="Center" Height="4" />
+                <Track x:Name="PART_Track" Grid.Row="1">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}"  Style="{StaticResource SliderRepeatButtonStyle}" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource SliderRepeatButtonStyle}"/>
+                    </Track.IncreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb x:Name="Thumb" Style="{StaticResource sliderThumb}" />
+                    </Track.Thumb>
+                </Track>
+            </Grid>
+        </ControlTemplate>
+    </Window.Resources>
+    
+    <Grid Background="#222222" UseLayoutRounding="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!-- Logo / Menu -->
+        <Image Source="Resources/Images/Logo.png" Width="158" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" RenderOptions.BitmapScalingMode="Fant"></Image>
+        
+        <!-- Song Name -->
+        <TextBlock Name="tbSong" Style="{StaticResource SourceSansBold}" FontSize="26" Grid.Row="1" TextWrapping="Wrap"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,6,0,0"/>
+
+        <!-- Played bar -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ProgressBar Name="pBar"  Grid.Column="1" Grid.ColumnSpan="2" Height="23" Value="100" Foreground="#4a667c" Background="#1b1b1b" BorderBrush="Transparent"  MinWidth="100"></ProgressBar>
+        </Grid>
+        
+        <!-- Second played / Song Length-->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition MinWidth="40"/>
+                <ColumnDefinition MinWidth="40"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Name="tbCurrentSecond" Style="{StaticResource SourceSansBold}" Grid.Column="1" FontSize="18">0:00</TextBlock>
+            <TextBlock Name="tbLastSecond" Style="{StaticResource SourceSansBold}" Grid.Column="2" HorizontalAlignment="Right" FontSize="18">0:00</TextBlock>
+        </Grid>
+        
+        <!-- Play/Pause button -->
+        <CheckBox IsTabStop="False" Name="buttonPlay" Grid.Row="4" Template="{StaticResource PlayOrPause}" local:Icons.Image="Resources/Images/PlayIcon.png" local:IconsSelected.ImageSelected="Resources/Images/PauseIcon.png"/>
+        
+        <!-- Volume -->
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <!-- Custom Slider-->
+            <Slider Name="sldrVolume" Template="{StaticResource sliderVol}" ValueChanged="sldrVolume_ValueChanged"
+                    Grid.Column="3" Grid.ColumnSpan="2" Minimum="0" Maximum="1" Value="1" VerticalAlignment="Center"/>
+        </Grid>
+
+        <!-- DJ Avatar -->
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Name="imgDJ" Grid.Column="2" RenderOptions.BitmapScalingMode="Fant"/>
+        </Grid>
+        
+        <!-- DJ Name-->
+        <TextBlock Name="tbDJName" Style="{StaticResource SourceSansBold}" FontSize="17" Grid.Row="7" TextWrapping="Wrap"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

@@ -29,7 +29,7 @@ namespace Radio
         /// <param name="CurrentTime"></param>
         /// <param name="EndTime"></param>
         /// <param name="Sldr"></param>
-        public static async void NeedToUpdate(Song Current, TextBlock Song, TextBlock DJ, TextBlock Listeners, TextBlock CurrentTime, TextBlock EndTime, Slider Sldr, Image Img, Timer timer)
+        public static async void NeedToUpdate(Song Current, TextBlock Song, TextBlock DJ/*, TextBlock Listeners*/, TextBlock CurrentTime, TextBlock EndTime, System.Windows.Controls.ProgressBar Sldr, Image Img, Timer timer)
         {   
             if (Current.ShouldUpdateSong() || !_hasStarted)
             {
@@ -47,7 +47,7 @@ namespace Radio
                 }
                 Song.Text = Current.Name;
                 DJ.Text = Current.Dj;
-                Listeners.Text = Current.Listeners.ToString();
+                //Listeners.Text = Current.Listeners.ToString();
                 CurrentTime.Text = Current.CurrentTime;
                 EndTime.Text = Current.EndTime;
                 Sldr.Maximum = Current.DoubleEndTime;

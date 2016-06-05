@@ -9,4 +9,4 @@ A work in progress
 ## Commands / Shortcuts
     Space or ► ❚❚ to play or stop
 
-![](scr4.png)
+![](scr5.png)
