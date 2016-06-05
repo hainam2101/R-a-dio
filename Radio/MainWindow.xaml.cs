@@ -48,13 +48,13 @@ namespace Radio
             t.Interval = (int) Player.TickMode.NormalMode;
             Song playingNow = new Song();
 
-            Updater.NeedToUpdate(playingNow, textBlockSongValue,
-                     textBlockDJValue, textBlockListenersValue,
-                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t);
+            Updater.NeedToUpdate(playingNow, tbSong,
+                     tbDJName/*, textBlockListenersValue*/,
+                     tbCurrentSecond, tbLastSecond, pBar, imgDJ, t);
 
-            t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(playingNow, textBlockSongValue,
-                     textBlockDJValue, textBlockListenersValue,
-                     textBlockCurrentTimeValue, textBlockEndTimeSecondsValue, slider, image, t));
+            t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(playingNow, tbSong,
+                     tbDJName/*, textBlockListenersValue*/,
+                     tbCurrentSecond, tbLastSecond, pBar, imgDJ, t));
             t.Start();
         }
 
@@ -85,9 +85,9 @@ namespace Radio
             args.CanExecute = true;
         }
 
-        private void sliderVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void sldrVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            StreamMp3.ChangeVolume((float)sliderVolume.Value);
+            StreamMp3.ChangeVolume((float)sldrVolume.Value);
         }
     }
 }

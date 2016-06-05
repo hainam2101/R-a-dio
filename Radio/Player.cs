@@ -104,6 +104,7 @@ namespace Radio
                                 bufferedWaveProvider.BufferDuration = TimeSpan.FromSeconds(20); // allow us to get well ahead of ourselves
                                 //this.bufferedWaveProvider.BufferedDuration = 250;
                             }
+                            /// TODO: Sometimes this throws
                             int decompressed = decompressor.DecompressFrame(frame, buffer, 0);
                             //Debug.WriteLine(String.Format("Decompressed a frame {0}", decompressed));
                             bufferedWaveProvider.AddSamples(buffer, 0, decompressed);
