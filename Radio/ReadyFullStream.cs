@@ -77,6 +77,10 @@ namespace Radio
                 else
                 {
                     readAheadOffset = 0;
+                    /* Exception, happens sometimes while stop playing.
+                     Excepción no controlada del tipo 'System.IO.IOException' en System.dll
+                      Información adicional: Unable to read data from the transport connection: A blocking operation was interrupted by a call to WSACancelBlockingCall.
+                     */
                     readAheadLength = sourceStream.Read(readAheadBuffer, 0, readAheadBuffer.Length);
                     if (readAheadLength == 0)
                     {
