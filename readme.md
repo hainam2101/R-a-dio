@@ -14,7 +14,7 @@ A work in progress
 ## Installation
     * Download the source, open the solution (.sln file) in Visual Studio, and click accept if shows any warning.
 	
-	* Click on Project tab, the click on `Manage Nuget packages`
+	* Click on Project tab, then click on `Manage Nuget packages`.
 	
 	* Search for the dependencies, and install the following libraries: NAudio, and Newtonsoft.Json. Make
 	sure that both libs are installed, and the references added to the project like in the following screenshots:
