@@ -16,8 +16,8 @@ A work in progress
 	* Click on Project tab, the click on `Manage Nuget packages`
 	* Search for the dependencies, and install the following libraries: NAudio, and Newtonsoft.Json. Make
 	sure that both libs are installed, and the references added to the project like in the following screenshots:
-	*![](images/installation/LibrariesInstalled.png)
-	*![](images/installation/ReferencesAdded.png)
+![](images/installation/LibrariesInstalled.png)
+![](images/installation/ReferencesAdded.png)
 	* Press F6 to compile.
 	* Double click the application called `Radio` to open it. This is ubicated in the route 
 	`Radio/bin/Release/`
