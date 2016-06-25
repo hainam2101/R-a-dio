@@ -93,6 +93,16 @@ namespace Radio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap MinimizeIconBig {
+            get {
+                object obj = ResourceManager.GetObject("MinimizeIconBig", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PauseIcon {
             get {
                 object obj = ResourceManager.GetObject("PauseIcon", resourceCulture);

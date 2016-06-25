@@ -76,6 +76,13 @@
                 </Track>
             </Grid>
         </ControlTemplate>
+        
+        <!-- Generic Image Button -->
+        <ControlTemplate x:Key="ImgButton" TargetType="Button">
+            <Image Name="Icon" Source="{Binding Path=(local:Icons.Image), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"
+                   Width="{Binding Path=Width}" Height="{Binding Path=Height}" RenderOptions.BitmapScalingMode="Fant"/>
+        </ControlTemplate>
+        
     </Window.Resources>
     
     <Grid Background="#222222" UseLayoutRounding="True">
@@ -91,8 +98,12 @@
         </Grid.RowDefinitions>
         
         <!-- Logo / Menu -->
-        <Image Source="Resources/Images/Logo.png" Width="158" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" RenderOptions.BitmapScalingMode="Fant"></Image>
-        
+        <!--<Image Source="Resources/Images/Logo.png" Width="158" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" RenderOptions.BitmapScalingMode="Fant"></Image>-->
+        <Grid>
+            <Image Source="Resources/Images/Logo.png" Width="158" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" RenderOptions.BitmapScalingMode="Fant"></Image>
+            <Button Name="showMPlayer" Click="showMPlayer_Click" Template="{StaticResource ImgButton}" local:Icons.Image="Resources/Images/MinimizeIconBig.png" 
+                    Width="16" Height="16" HorizontalAlignment="Right" Margin="0,15,10,0"/>
+        </Grid>
         <!-- Song Name -->
         <TextBlock Name="tbSong" Style="{StaticResource SourceSansBold}" FontSize="26" Grid.Row="1" TextWrapping="Wrap"
                    HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,6,0,0"/>
