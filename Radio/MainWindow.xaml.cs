@@ -29,6 +29,8 @@ namespace Radio
         {
             InitializeComponent();
 
+            this.Closing += new System.ComponentModel.CancelEventHandler(closeApp);
+
             isMainShowed = true;
 
             // Initialize and bind the command for Play/Stop
@@ -114,5 +116,13 @@ namespace Radio
                 isMainShowed = true;
             }
         }
+
+        void closeApp(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+        
+        
+
     }
 }
