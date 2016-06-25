@@ -22,11 +22,14 @@ namespace Radio
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool isMainShowed;
         bool isPlaying;
-
+        public static MiniPlayer mp = new MiniPlayer();
         public MainWindow()
         {
             InitializeComponent();
+
+            isMainShowed = true;
 
             // Initialize and bind the command for Play/Stop
             buttonPlay.Command = PlayOrStopCommand.PlayOrStop;
@@ -35,6 +38,9 @@ namespace Radio
             binding.Executed += PlayOrStop_Execute;
             binding.CanExecute += PlayOrStop_CanExecute;
             CommandBindings.Add(binding);
+
+            this.Hide();
+            mp.Show();
 
             RadioUpdater();
         }
@@ -88,6 +94,22 @@ namespace Radio
         private void sldrVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             StreamMp3.ChangeVolume((float)sldrVolume.Value);
+        }
+
+        public static void ChangeWindow()
+        {
+            if (isMainShowed)
+            {
+                this.Hide();
+                mp.Show();
+                isMainShowed = false;
+            }
+            else
+            {
+                mp.Hide();
+                this.Show();
+                isMainShowed = true;
+            }
         }
     }
 }
