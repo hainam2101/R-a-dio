@@ -129,11 +129,7 @@ namespace Radio
 
         private void ChangeView_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show("Changing View");
-            /*this.Hide();
-            mw.Show();*/
             mw.ChangeWindow();
-
         }
     }
 }

@@ -24,6 +24,7 @@ namespace Radio
     {
         bool isMainShowed;
         bool isPlaying;
+
         public static MiniPlayer mp = new MiniPlayer();
         public MainWindow()
         {
@@ -43,10 +44,6 @@ namespace Radio
 
             // Pass this window
             mp.SetOtherView(this);
-            // Hide MainWindow
-            // Not used since this was for testing
-            /*this.Hide();
-            mp.Show();*/
 
             RadioUpdater();
         }
