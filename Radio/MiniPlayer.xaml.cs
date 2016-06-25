@@ -22,12 +22,20 @@ namespace Radio
 
         ControlTemplate miniPlay;
         ControlTemplate miniSong;
+
+        MainWindow mw;
+
         public MiniPlayer()
         {
             InitializeComponent();
             miniPlay = (ControlTemplate)FindResource("miniPlay");
             miniSong = (ControlTemplate)this.FindResource("miniSong");
             miniPlayerMain.Template = miniSong;
+        }
+
+        public void SetOtherView(MainWindow MW)
+        {
+            mw = MW;
         }
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
@@ -122,7 +130,9 @@ namespace Radio
         private void ChangeView_Click(object sender, RoutedEventArgs e)
         {
             //MessageBox.Show("Changing View");
-            MainWindow.ChangeWindow();
+            this.Hide();
+            mw.Show();
+
         }
     }
 }

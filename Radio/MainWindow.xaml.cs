@@ -39,6 +39,9 @@ namespace Radio
             binding.CanExecute += PlayOrStop_CanExecute;
             CommandBindings.Add(binding);
 
+            // Pass this window
+            mp.SetOtherView(this);
+            // Hide MainWindow
             this.Hide();
             mp.Show();
 
@@ -96,7 +99,7 @@ namespace Radio
             StreamMp3.ChangeVolume((float)sldrVolume.Value);
         }
 
-        public static void ChangeWindow()
+        public void ChangeWindow()
         {
             if (isMainShowed)
             {
