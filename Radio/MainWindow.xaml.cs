@@ -44,8 +44,9 @@ namespace Radio
             // Pass this window
             mp.SetOtherView(this);
             // Hide MainWindow
-            this.Hide();
-            mp.Show();
+            // Not used since this was for testing
+            /*this.Hide();
+            mp.Show();*/
 
             RadioUpdater();
         }
