@@ -132,9 +132,14 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock Style="{StaticResource SourceSansBold}" Grid.Column="1">Miracle∞Hinacle Miracle∞Hinacle Miracle∞Hinacle</TextBlock>
-                    <ProgressBar  Name="pBar"  Grid.Column="1" Grid.Row="1" Height="4" HorizontalAlignment="Left" Value="80" Foreground="#4a667c" Background="#1b1b1b" BorderBrush="Transparent" Margin="6,0,0,0"  Width="200"></ProgressBar>
-                    <TextBlock Style="{StaticResource SourceSansBold}" Grid.Column="1" Grid.Row="2"  Margin="6,-4,0,0">3L</TextBlock>
+                    <TextBlock FontSize="12" Name="mpSongName" Text="{Binding ElementName=songName, Path=Text}" TextWrapping="Wrap" Grid.RowSpan="2" Style="{StaticResource SourceSansBold}" Grid.Column="1" />
+
+                    <!--<ProgressBar  Name="pBar"  Grid.Column="1" Grid.Row="2" Height="4" HorizontalAlignment="Left" Value="80" Foreground="#4a667c" Background="#1b1b1b" BorderBrush="Transparent" Margin="6,0,0,0"  Width="200"></ProgressBar>-->
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
+                        <ProgressBar  Name="pBar" Value="{Binding ElementName=playedBar, Path=Value}" Maximum="{Binding ElementName=playedBar, Path=Maximum}" Height="4" HorizontalAlignment="Left" Foreground="#4a667c" Background="#1b1b1b" BorderBrush="Transparent" Margin="6,0,0,0"  Width="200"></ProgressBar>
+                        <TextBlock Style="{StaticResource SourceSansBold}" Text="{Binding ElementName=songDuration, Path=Text}" FontSize="12" Margin="4,-1,0,0"/>
+                    </StackPanel>
+                   
                 </Grid>
             </UserControl>
         </ControlTemplate>
@@ -175,5 +180,11 @@
             <Button Click="ChangeView_Click" Template="{StaticResource ImgButton}" Grid.Row="2" DockPanel.Dock="Right" local:Icons.Image="Resources/Images/MaximizeIcon.png"
                     Width="11" Height="11" Margin="0,0,3,-0"/>
         </DockPanel>
+        <!-- Extra elements to allow Binding from MainWindow to MiniPlayer elements -->
+        <!-- Yeh, I know it's hackish. pls don't bully -->
+        <TextBlock Name="songName" Visibility="Collapsed"/>
+        <TextBlock Name="artistName" Visibility="Collapsed"/>
+        <TextBlock Name="songDuration" Visibility="Collapsed"/>
+        <ProgressBar Name="playedBar" Visibility="Collapsed"/>
     </Grid>
 </Window>

@@ -25,10 +25,15 @@ namespace Radio
         bool isMainShowed;
         bool isPlaying;
 
-        public static MiniPlayer mp = new MiniPlayer();
+        public static MiniPlayer mp;
         public MainWindow()
         {
             InitializeComponent();
+
+            /*mp = new MiniPlayer()
+            {
+                //DataContext = this
+            };*/
 
             this.Closing += new System.ComponentModel.CancelEventHandler(closeApp);
 
@@ -42,8 +47,8 @@ namespace Radio
             binding.CanExecute += PlayOrStop_CanExecute;
             CommandBindings.Add(binding);
 
-            // Pass this window
-            mp.SetOtherView(this);
+            /*// Pass this window
+            mp.SetOtherView(this);*/
 
             RadioUpdater();
         }
@@ -52,7 +57,11 @@ namespace Radio
 
         void RadioUpdater()
         {
-            
+            mp = new MiniPlayer();
+
+            // Pass this window
+            mp.SetOtherView(this);
+
             Timer t = new Timer();
             t.Interval = (int) Player.TickMode.NormalMode;
             Song playingNow = new Song();
