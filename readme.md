@@ -14,7 +14,7 @@ A work in progress
 
 ![](images/versions/miniPlayer.png)
 
-![](images/versions/miniPlayerControls.png)
+![](images/versions/miniPlayerControls.jpg)
 
 ## Installation
     * Download the source, open the solution (.sln file) in Visual Studio, and click accept if shows any warning.
