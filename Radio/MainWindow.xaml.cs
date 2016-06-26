@@ -24,6 +24,13 @@ namespace Radio
     {
         bool isMainShowed;
         bool isPlaying;
+        Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
+
+        public Player Stream
+        {
+            get { return StreamMp3; }
+            private set { }
+        }
 
         public static MiniPlayer mp;
         public MainWindow()
@@ -53,7 +60,7 @@ namespace Radio
             RadioUpdater();
         }
 
-        Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
+        
 
         void RadioUpdater()
         {

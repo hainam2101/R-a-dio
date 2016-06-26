@@ -79,6 +79,12 @@ namespace Radio
             playState.Source = mw.buttonPlay;
             playState.Path = new PropertyPath("Content");
             playOrStop.SetBinding(CheckBox.ContentProperty, playState);
+
+            // Sets the volume
+            Binding currVol = new Binding();
+            currVol.Source = mw.sldrVolume;
+            currVol.Path = new PropertyPath("Value");
+            volume.SetBinding(Slider.ValueProperty, currVol);
         }
 
         /// <summary>
@@ -148,5 +154,6 @@ namespace Radio
         {
             mw.ChangeWindow();
         }
+        
     }
 }

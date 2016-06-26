@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace Radio
 {
-    class Player
+    public class Player
     {
         public enum TickMode
         {
