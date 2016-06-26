@@ -73,6 +73,12 @@ namespace Radio
             maximumBarBdg.Source = mw.pBar;
             maximumBarBdg.Path = new PropertyPath("Maximum");
             playedBar.SetBinding(ProgressBar.MaximumProperty, maximumBarBdg);
+
+            // Sets the play/pause state
+            Binding playState = new Binding();
+            playState.Source = mw.buttonPlay;
+            playState.Path = new PropertyPath("Content");
+            playOrStop.SetBinding(CheckBox.ContentProperty, playState);
         }
 
         /// <summary>
@@ -111,16 +117,14 @@ namespace Radio
             miniPlayerMain.Template = miniSong;
         }
 
+        /// <summary>
+        /// Wrapper to play/stop from this view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonPlay_Click(object sender, RoutedEventArgs e)
         {
-            if (miniPlayerMain.Content.Equals("Play"))
-            {
-                miniPlayerMain.Content = "Stop";
-            }
-            else
-            {
-                miniPlayerMain.Content = "Play";
-            }
+            mw.PlayOrStop_Execute(sender, null);
         }
 
         /// <summary>

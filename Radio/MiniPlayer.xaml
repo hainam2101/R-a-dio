@@ -116,10 +116,9 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <CheckBox Margin="0,5,0,0" Grid.ColumnSpan="4" Content="{Binding ElementName=miniPlayerMain, Path=Content}" Click="buttonPlay_Click" IsTabStop="False" x:Name="buttonPlay" Template="{StaticResource PlayOrPause}" local:Icons.Image="Resources/Images/PlayIcon.png" local:IconsSelected.ImageSelected="Resources/Images/PauseIcon.png"/>
+                    <CheckBox Margin="0,5,0,0" Grid.ColumnSpan="4" Content="{Binding ElementName=playOrStop, Path=Content}" Click="buttonPlay_Click"  IsTabStop="False" Template="{StaticResource PlayOrPause}" local:Icons.Image="Resources/Images/PlayIcon.png" local:IconsSelected.ImageSelected="Resources/Images/PauseIcon.png"/>
                     <Slider Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Name="sldrVolume" Template="{StaticResource sliderVol}" 
                      Minimum="0" Maximum="1" Value="1" VerticalAlignment="Center"/>
-
                 </Grid>
             </UserControl>
         </ControlTemplate>
@@ -186,5 +185,6 @@
         <TextBlock Name="artistName" Visibility="Collapsed"/>
         <TextBlock Name="songDuration" Visibility="Collapsed"/>
         <ProgressBar Name="playedBar" Visibility="Collapsed"/>
+        <CheckBox Name="playOrStop" Visibility="Collapsed"/>
     </Grid>
 </Window>
