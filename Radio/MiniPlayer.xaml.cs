@@ -28,8 +28,10 @@ namespace Radio
         public MiniPlayer()
         {
             InitializeComponent();
+            // Saves the views
             miniPlay = (ControlTemplate)FindResource("miniPlay");
             miniSong = (ControlTemplate)this.FindResource("miniSong");
+            // Set the view
             miniPlayerMain.Template = miniSong;
         }
 
@@ -154,6 +156,5 @@ namespace Radio
         {
             mw.ChangeWindow();
         }
-        
     }
 }

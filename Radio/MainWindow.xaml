@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Radio"
         mc:Ignorable="d"
         Name="MWindow"
-        Title="Radio" Height="350" Width="525">
+        Title="R/a/dio" Height="350" Width="525">
     <Window.Resources>
         <!-- Nice font -->
         <Style x:Key="SourceSansBold">
@@ -105,6 +105,7 @@
             <Button Name="showMPlayer" Click="showMPlayer_Click" Template="{StaticResource ImgButton}" local:Icons.Image="Resources/Images/MinimizeIconBig.png" 
                     Width="16" Height="16" HorizontalAlignment="Right" Margin="0,15,10,0"/>
         </Grid>
+        
         <!-- Song Name -->
         <TextBlock Name="tbSong" Style="{StaticResource SourceSansBold}" FontSize="26" Grid.Row="1" TextWrapping="Wrap"
                    HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,6,0,0"/>

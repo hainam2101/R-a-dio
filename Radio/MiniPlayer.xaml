@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Radio"
         mc:Ignorable="d"
-        Title="MainWindow" Height="45" Width="320" WindowStyle="None" ResizeMode="NoResize" Topmost="True">
+        Title="R/a/dio MiniPlayer" Height="45" Width="320" WindowStyle="None" 
+        ResizeMode="NoResize" Topmost="True" UseLayoutRounding="True">
     <Window.Resources>
 
         <!-- @Original Style -->
@@ -27,6 +28,7 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
+        <!-- Generic button from image -->
         <ControlTemplate x:Key="ImgButton" TargetType="Button">
             <Image Source="{Binding Path=(local:Icons.Image), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" Width="{Binding Path=Width}" 
                    Height="{Binding Path=Height}" RenderOptions.BitmapScalingMode="Fant"/>
@@ -87,21 +89,6 @@
             </Grid>
         </ControlTemplate>
 
-        <!--<ControlTemplate x:Key="miniPlay" TargetType="UserControl">
-            <UserControl MouseLeave="miniPlayerMain_MouseLeave" Width="250" Height="45">
-            <Grid MouseLeave="miniPlayerMain_MouseLeave" Grid.RowSpan="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                    <Button>a</Button>
-                    
-                    <StackPanel Grid.Row="1">
-                        <ScrollBar></ScrollBar>
-                    </StackPanel>
-                </Grid>
-            </UserControl>
-        </ControlTemplate>-->
         <!-- Mini Player and Volumen -->
         <ControlTemplate x:Name="mPlay" x:Key="miniPlay" TargetType="UserControl">
             <UserControl Name="US" MouseLeave="miniPlayerMain_MouseLeave" Width="250" Background="Transparent" Height="45">
@@ -119,11 +106,11 @@
                     <CheckBox Margin="0,5,0,0" Grid.ColumnSpan="4" Content="{Binding ElementName=playOrStop, Path=Content}" Click="buttonPlay_Click"  IsTabStop="False" Template="{StaticResource PlayOrPause}" local:Icons.Image="Resources/Images/PlayIcon.png" local:IconsSelected.ImageSelected="Resources/Images/PauseIcon.png"/>
                     <Slider Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Name="sldrVolume" Template="{StaticResource sliderVol}"
                      Minimum="0" Maximum="1"  VerticalAlignment="Center" Value="{Binding ElementName=volume, Path=Value}"/>
-
                 </Grid>
             </UserControl>
         </ControlTemplate>
 
+        <!-- Current song, Play bar, and song duration -->
         <ControlTemplate x:Key="miniSong" TargetType="UserControl">
             <UserControl MouseEnter="miniPlayerMain_MouseEnter">
                 <Grid Grid.Column="1" Grid.RowSpan="3">
@@ -134,17 +121,16 @@
                     </Grid.RowDefinitions>
                     <TextBlock FontSize="12" Name="mpSongName" Text="{Binding ElementName=songName, Path=Text}" TextWrapping="Wrap" Grid.RowSpan="2" Style="{StaticResource SourceSansBold}" Grid.Column="1" />
 
-                    <!--<ProgressBar  Name="pBar"  Grid.Column="1" Grid.Row="2" Height="4" HorizontalAlignment="Left" Value="80" Foreground="#4a667c" Background="#1b1b1b" BorderBrush="Transparent" Margin="6,0,0,0"  Width="200"></ProgressBar>-->
                     <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
                         <ProgressBar  Name="pBar" Value="{Binding ElementName=playedBar, Path=Value}" Maximum="{Binding ElementName=playedBar, Path=Maximum}" Height="4" HorizontalAlignment="Left" Foreground="#4a667c" Background="#1b1b1b" BorderBrush="Transparent" Margin="6,0,0,0"  Width="200"></ProgressBar>
                         <TextBlock Style="{StaticResource SourceSansBold}" Text="{Binding ElementName=songDuration, Path=Text}" FontSize="12" Margin="4,-1,0,0"/>
                     </StackPanel>
-                   
                 </Grid>
             </UserControl>
         </ControlTemplate>
-
     </Window.Resources>
+
+    <!-- Song info, and Buttons container -->
     <Grid Background="#222222" MouseDown="Grid_MouseDown" Name="May">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -156,22 +142,14 @@
             <ColumnDefinition Width="250" MaxWidth="250"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        
+        <!-- Mini Logo-->
         <Image Margin="3,0,0,0" Source="Resources/Images/radioIconSmall.png" Grid.RowSpan="3" RenderOptions.BitmapScalingMode="Fant" Width="39" Height="39"/>
 
-        <UserControl Content="Play" Width="250" Height="45" Name="miniPlayerMain"  Grid.Column="1" Grid.RowSpan="3">
+        <!-- Changeable view with a hover -->
+        <UserControl Content="Play" Width="250" Height="45" Name="miniPlayerMain"  Grid.Column="1" Grid.RowSpan="3"/>
 
-        </UserControl>
-        <!-- This doesn't admits a ControlTemplate -->
-        <!--<Grid  Grid.Column="1" Grid.RowSpan="3">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <TextBlock Style="{StaticResource SourceSansBold}" Grid.Column="1">Miracle∞Hinacle Miracle∞Hinacle Miracle∞Hinacle</TextBlock>
-        <ProgressBar Name="pBar"  Grid.Column="1" Grid.Row="1" Height="4" HorizontalAlignment="Left" Value="80" Foreground="#4a667c" Background="#1b1b1b" BorderBrush="Transparent" Margin="6,0,0,0"  Width="200"></ProgressBar>
-            <TextBlock Style="{StaticResource SourceSansBold}" Grid.Column="1" Grid.Row="2"  Margin="6,-4,0,0">3L</TextBlock>
-        </Grid>-->
+        <!-- Close/Maximize button -->
         <DockPanel Grid.Column="2" LastChildFill="False">
             <Button Click="Close_Click" Template="{StaticResource ImgButton}" DockPanel.Dock="Right" local:Icons.Image="Resources/Images/CloseIcon.png"
                     Width="11" Height="11" Margin="0,-0,3,0"/>
@@ -180,6 +158,7 @@
             <Button Click="ChangeView_Click" Template="{StaticResource ImgButton}" Grid.Row="2" DockPanel.Dock="Right" local:Icons.Image="Resources/Images/MaximizeIcon.png"
                     Width="11" Height="11" Margin="0,0,3,-0"/>
         </DockPanel>
+
         <!-- Extra elements to allow Binding from MainWindow to MiniPlayer elements -->
         <!-- Yeh, I know it's hackish. pls don't bully -->
         <TextBlock Name="songName" Visibility="Collapsed"/>

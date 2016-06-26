@@ -26,22 +26,12 @@ namespace Radio
         bool isPlaying;
         Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
 
-        public Player Stream
-        {
-            get { return StreamMp3; }
-            private set { }
-        }
-
         public static MiniPlayer mp;
         public MainWindow()
         {
             InitializeComponent();
 
-            /*mp = new MiniPlayer()
-            {
-                //DataContext = this
-            };*/
-
+            // Adds the event handler to close all the windows from MainWindow
             this.Closing += new System.ComponentModel.CancelEventHandler(closeApp);
 
             isMainShowed = true;
@@ -53,9 +43,6 @@ namespace Radio
             binding.Executed += PlayOrStop_Execute;
             binding.CanExecute += PlayOrStop_CanExecute;
             CommandBindings.Add(binding);
-
-            /*// Pass this window
-            mp.SetOtherView(this);*/
 
             RadioUpdater();
         }
