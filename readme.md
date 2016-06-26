@@ -9,7 +9,12 @@ A work in progress
 ## Commands / Shortcuts
     Space or ► ❚❚ to play or stop
 
-![](images/versions/scr5.png)
+## Screenshots
+![](images/versions/scr6.png)
+
+![](images/versions/miniPlayer.png)
+
+![](images/versions/miniPlayerControls.png)
 
 ## Installation
     * Download the source, open the solution (.sln file) in Visual Studio, and click accept if shows any warning.
