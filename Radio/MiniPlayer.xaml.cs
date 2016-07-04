@@ -57,6 +57,14 @@ namespace Radio
             binding.Executed += mw.PlayOrStop_Execute;
             binding.CanExecute += mw.PlayOrStop_CanExecute;
             CommandBindings.Add(binding);
+
+            // Command for the Minimize button
+            btnChangeView.Command = MinimizeMazimizeCommand.MinimizeOrMaximize;
+            CommandBinding bindingView = new CommandBinding();
+            bindingView.Command = MinimizeMazimizeCommand.MinimizeOrMaximize;
+            bindingView.Executed += mw.MinimizeOrMaximize_Execute;
+            bindingView.CanExecute += mw.MinimizeOrMaximize_CanExecute;
+            CommandBindings.Add(bindingView);
         }
 
         /// <summary>
