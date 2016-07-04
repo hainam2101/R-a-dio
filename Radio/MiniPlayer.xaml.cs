@@ -25,6 +25,8 @@ namespace Radio
 
         MainWindow mw;
 
+        
+
         public MiniPlayer()
         {
             InitializeComponent();
@@ -33,6 +35,8 @@ namespace Radio
             miniSong = (ControlTemplate)this.FindResource("miniSong");
             // Set the view
             miniPlayerMain.Template = miniSong;
+
+            
         }
 
         /// <summary>
@@ -45,6 +49,14 @@ namespace Radio
         {
             mw = MW;
             SetBindings();
+
+            // Initialize and bind the command for Play/Stop
+            btnPlayCommand.Command = PlayOrStopCommand.PlayOrStop;
+            CommandBinding binding = new CommandBinding();
+            binding.Command = PlayOrStopCommand.PlayOrStop;
+            binding.Executed += mw.PlayOrStop_Execute;
+            binding.CanExecute += mw.PlayOrStop_CanExecute;
+            CommandBindings.Add(binding);
         }
 
         /// <summary>
