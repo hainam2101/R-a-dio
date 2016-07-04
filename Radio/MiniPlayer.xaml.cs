@@ -166,15 +166,5 @@ namespace Radio
             //this.Close(); 
             Application.Current.Shutdown();
         }
-
-        /// <summary>
-        /// Allows us to change between the MainWindow and MiniPlayer.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ChangeView_Click(object sender, RoutedEventArgs e)
-        {
-            mw.ChangeWindow();
-        }
     }
 }

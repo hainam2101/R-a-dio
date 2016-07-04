@@ -104,7 +104,6 @@
             <Image Source="Resources/Images/Logo.png" Width="158" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" RenderOptions.BitmapScalingMode="Fant"></Image>
             <Button Name="showMPlayer"  Template="{StaticResource ImgButton}" local:Icons.Image="Resources/Images/MinimizeIconBig.png" 
                     IsTabStop="False" Focusable="False" Width="16" Height="16" HorizontalAlignment="Right" Margin="0,15,10,0"/>
-            <!--Click="showMPlayer_Click"-->
         </Grid>
         
         <!-- Song Name -->

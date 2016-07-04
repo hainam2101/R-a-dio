@@ -157,7 +157,6 @@
         <DockPanel Grid.Column="2" Grid.Row="2" LastChildFill="False">
             <Button Name="btnChangeView" Template="{StaticResource ImgButton}" Grid.Row="2" DockPanel.Dock="Right" local:Icons.Image="Resources/Images/MaximizeIcon.png"
                     IsTabStop="False" Focusable="False" Width="11" Height="11" Margin="0,0,3,-0"/>
-            <!--Click="ChangeView_Click"-->
         </DockPanel>
 
         <!-- Extra elements to allow Binding from MainWindow to MiniPlayer elements -->
