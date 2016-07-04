@@ -8,6 +8,7 @@ A work in progress
 	
 ## Commands / Shortcuts
     Space or ► ❚❚ to play or stop
+	CTRL + SHIFT + M   to change between views.
 
 ## Screenshots
 ![](images/versions/scr6.png)
