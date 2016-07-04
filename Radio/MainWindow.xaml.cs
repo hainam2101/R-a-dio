@@ -44,6 +44,14 @@ namespace Radio
             binding.CanExecute += PlayOrStop_CanExecute;
             CommandBindings.Add(binding);
 
+            // Command for the Minimize button
+            showMPlayer.Command = MinimizeMazimizeCommand.MinimizeOrMaximize;
+            CommandBinding bindingView = new CommandBinding();
+            bindingView.Command = MinimizeMazimizeCommand.MinimizeOrMaximize;
+            bindingView.Executed += MinimizeOrMaximize_Execute;
+            bindingView.CanExecute += MinimizeOrMaximize_CanExecute;
+            CommandBindings.Add(bindingView);
+
             RadioUpdater();
         }
 
@@ -123,9 +131,14 @@ namespace Radio
             System.Windows.Application.Current.Shutdown();
         }
 
-        private void showMPlayer_Click(object sender, RoutedEventArgs e)
+        public void MinimizeOrMaximize_Execute(object sender, ExecutedRoutedEventArgs args)
         {
-            this.ChangeWindow();
+            ChangeWindow();
+        }
+
+        public void MinimizeOrMaximize_CanExecute(object sender, CanExecuteRoutedEventArgs args)
+        {
+            args.CanExecute = true;
         }
     }
 }

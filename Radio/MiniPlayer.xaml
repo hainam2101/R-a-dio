@@ -155,8 +155,8 @@
                     Width="11" Height="11" Margin="0,-0,3,0"/>
         </DockPanel>
         <DockPanel Grid.Column="2" Grid.Row="2" LastChildFill="False">
-            <Button Click="ChangeView_Click" Template="{StaticResource ImgButton}" Grid.Row="2" DockPanel.Dock="Right" local:Icons.Image="Resources/Images/MaximizeIcon.png"
-                    Width="11" Height="11" Margin="0,0,3,-0"/>
+            <Button Name="btnChangeView" Template="{StaticResource ImgButton}" Grid.Row="2" DockPanel.Dock="Right" local:Icons.Image="Resources/Images/MaximizeIcon.png"
+                    IsTabStop="False" Focusable="False" Width="11" Height="11" Margin="0,0,3,-0"/>
         </DockPanel>
 
         <!-- Extra elements to allow Binding from MainWindow to MiniPlayer elements -->
@@ -167,5 +167,6 @@
         <ProgressBar Name="playedBar" Visibility="Collapsed"/>
         <CheckBox Name="playOrStop" Visibility="Collapsed"/>
         <Slider Name="volume" Visibility="Collapsed"/>
+        <Button Name="btnPlayCommand" Visibility="Collapsed"/>
     </Grid>
 </Window>

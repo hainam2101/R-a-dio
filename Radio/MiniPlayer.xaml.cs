@@ -25,6 +25,8 @@ namespace Radio
 
         MainWindow mw;
 
+        
+
         public MiniPlayer()
         {
             InitializeComponent();
@@ -33,6 +35,8 @@ namespace Radio
             miniSong = (ControlTemplate)this.FindResource("miniSong");
             // Set the view
             miniPlayerMain.Template = miniSong;
+
+            
         }
 
         /// <summary>
@@ -45,6 +49,22 @@ namespace Radio
         {
             mw = MW;
             SetBindings();
+
+            // Initialize and bind the command for Play/Stop
+            btnPlayCommand.Command = PlayOrStopCommand.PlayOrStop;
+            CommandBinding binding = new CommandBinding();
+            binding.Command = PlayOrStopCommand.PlayOrStop;
+            binding.Executed += mw.PlayOrStop_Execute;
+            binding.CanExecute += mw.PlayOrStop_CanExecute;
+            CommandBindings.Add(binding);
+
+            // Command for the Minimize button
+            btnChangeView.Command = MinimizeMazimizeCommand.MinimizeOrMaximize;
+            CommandBinding bindingView = new CommandBinding();
+            bindingView.Command = MinimizeMazimizeCommand.MinimizeOrMaximize;
+            bindingView.Executed += mw.MinimizeOrMaximize_Execute;
+            bindingView.CanExecute += mw.MinimizeOrMaximize_CanExecute;
+            CommandBindings.Add(bindingView);
         }
 
         /// <summary>
@@ -145,16 +165,6 @@ namespace Radio
             // This only closes the Window
             //this.Close(); 
             Application.Current.Shutdown();
-        }
-
-        /// <summary>
-        /// Allows us to change between the MainWindow and MiniPlayer.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ChangeView_Click(object sender, RoutedEventArgs e)
-        {
-            mw.ChangeWindow();
         }
     }
 }
