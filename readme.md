@@ -18,7 +18,7 @@ A work in progress
 ![](images/versions/miniPlayerControls.jpg)
 
 ## Installation
-Check the [Releases][https://github.com/yureru/R-a-dio/releases]
+Check the [Releases](https://github.com/yureru/R-a-dio/releases)
 
 ## Installation from source
     * Download the source, open the solution (.sln file) in Visual Studio, and click accept if shows any warning.
