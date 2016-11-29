@@ -6,6 +6,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+Setup/Release/RadioSetup.msi
+Setup/Release/setup.exe
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
