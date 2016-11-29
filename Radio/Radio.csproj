@@ -87,6 +87,7 @@
     </ApplicationDefinition>
     <Compile Include="AsyncException.cs" />
     <Compile Include="DjImage.cs" />
+    <Compile Include="FavoriteCommand.cs" />
     <Compile Include="ImageIcons.cs" />
     <Compile Include="MinimizeMazimizeCommand.cs" />
     <Compile Include="MiniPlayer.xaml.cs">

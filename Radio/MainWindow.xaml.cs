@@ -52,6 +52,14 @@ namespace Radio
             bindingView.CanExecute += MinimizeOrMaximize_CanExecute;
             CommandBindings.Add(bindingView);
 
+            // Command for the favorite button
+            favOrUnfavSong.Command = FavoriteCommand.Favorite;
+            CommandBinding bindingFav = new CommandBinding();
+            bindingFav.Command = FavoriteCommand.Favorite;
+            bindingFav.Executed += Favorite_Execute;
+            bindingFav.CanExecute += Favorite_CanExecute;
+            CommandBindings.Add(bindingFav);
+
             RadioUpdater();
         }
 
@@ -137,6 +145,16 @@ namespace Radio
         }
 
         public void MinimizeOrMaximize_CanExecute(object sender, CanExecuteRoutedEventArgs args)
+        {
+            args.CanExecute = true;
+        }
+
+        public void Favorite_Execute(object sender, ExecutedRoutedEventArgs args)
+        {
+            System.Windows.Forms.MessageBox.Show("Added to favorites!"); // Dummy placeholder
+        }
+
+        public void Favorite_CanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = true;
         }
