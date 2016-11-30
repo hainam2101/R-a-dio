@@ -103,6 +103,39 @@ namespace Radio
         }
 
         /// <summary>
+        /// Checks if the song name exists in the DB and the Favorite column is true.
+        /// </summary>
+        /// <param name="name">Song's name.</param>
+        /// <param name="conn">An opened DB connection.</param>
+        /// <returns></returns>
+        public static bool ExistsRecordAndIsFavorite(string name, SQLiteConnection conn)
+        {
+            var cmd = String.Format("SELECT * FROM {0} WHERE {1} = {2}",
+                Table, Name, Song);
+            var sqliteCMD = new SQLiteCommand(cmd, conn);
+            sqliteCMD.Parameters.Add(new SQLiteParameter(Song, name));
+            var reader = sqliteCMD.ExecuteReader();
+
+            if (reader.Read())
+            {
+                if ((bool)reader[Favorite])
+                {
+                    //Console.WriteLine("Found and is favorite");
+                    return true;
+                }
+            }
+
+            //Console.WriteLine("Not found or not favorite");
+            return false;
+        }
+
+        public static bool ExistsRecord(string name, SQLiteConnection conn)
+        {
+            //var cmd = string
+            return false;
+        }
+
+        /// <summary>
         /// Deletes a record based in name.
         /// </summary>
         /// <param name="name">Song's name.</param>
