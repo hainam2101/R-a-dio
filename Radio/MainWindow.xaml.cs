@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using System.Windows.Forms;
+using System.Data.SQLite;
 
 namespace Radio
 {
@@ -25,6 +26,10 @@ namespace Radio
         bool isMainShowed;
         bool isPlaying;
         bool isFavorite;
+        bool existsDB;
+
+        SQLiteConnection DBConn;
+
         Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
 
         public static MiniPlayer mp;
@@ -72,6 +77,27 @@ namespace Radio
 
             // Pass this window
             mp.SetOtherView(this);
+
+            // Database exists?
+            if (Database.ExistsDB())
+            {
+                existsDB = true;   
+            }
+            else
+            {
+                // Ask the user to create one: I think the creating dialog should be done when the user press the favorite button.
+                /*Database.CreateDBFileAndTable();
+                existsDB = true;*/
+                existsDB = false;
+            }
+
+            System.Windows.Forms.MessageBox.Show(Database.CurrentPath);
+
+            if (existsDB)
+            {
+                DBConn = Database.CreateDBConnection();
+                DBConn.Open();
+            }
 
             Timer t = new Timer();
             t.Interval = (int) Player.TickMode.NormalMode;
