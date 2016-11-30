@@ -23,7 +23,17 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        
+
+        <!-- Favorite Button-->
+        <ControlTemplate x:Key="FavoriteOrUnfavorite" TargetType="CheckBox">
+            <Image Name="Icon" Source="{Binding Path=(local:Icons.Image), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type CheckBox}}}" Width="16" Height="16" RenderOptions.BitmapScalingMode="Fant"/>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Content" Value="Favorite">
+                    <Setter TargetName="Icon" Property="Source" Value="{Binding Path=(local:IconsSelected.ImageSelected), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type CheckBox}}}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
         <!-- Custom Volume Slider -->
         <Style x:Key="sliderThumb" TargetType="Thumb">
             <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -102,7 +112,7 @@
         <!--<Image Source="Resources/Images/Logo.png" Width="158" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" RenderOptions.BitmapScalingMode="Fant"></Image>-->
         <Grid>
             <Image Source="Resources/Images/Logo.png" Width="158" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" RenderOptions.BitmapScalingMode="Fant"></Image>
-            <Button Name="favOrUnfavSong"  Template="{StaticResource ImgButton}" local:Icons.Image="Resources/Images/MinimizeIconBig.png" 
+            <CheckBox Name="favOrUnfavSong"  Template="{StaticResource FavoriteOrUnfavorite}" local:Icons.Image="Resources/Images/HeartUnselectedIcon.png"  local:IconsSelected.ImageSelected="Resources/Images/HeartSelectedIcon.png"
                     IsTabStop="False" Focusable="False" Width="16" Height="16" HorizontalAlignment="Right" Margin="0,15,36,0"/>
             <Button Name="showMPlayer"  Template="{StaticResource ImgButton}" local:Icons.Image="Resources/Images/MinimizeIconBig.png" 
                     IsTabStop="False" Focusable="False" Width="16" Height="16" HorizontalAlignment="Right" Margin="0,15,10,0"/>

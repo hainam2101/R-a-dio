@@ -24,6 +24,7 @@ namespace Radio
     {
         bool isMainShowed;
         bool isPlaying;
+        bool isFavorite;
         Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
 
         public static MiniPlayer mp;
@@ -151,7 +152,18 @@ namespace Radio
 
         public void Favorite_Execute(object sender, ExecutedRoutedEventArgs args)
         {
-            System.Windows.Forms.MessageBox.Show("Added to favorites!"); // Dummy placeholder
+            //System.Windows.Forms.MessageBox.Show("Added to favorites!"); // Dummy placeholder
+            if (isFavorite)
+            {
+                favOrUnfavSong.Content = "NoFavorite";
+            }
+            else
+            {
+                favOrUnfavSong.Content = "Favorite";
+            }
+
+            isFavorite = !isFavorite;
+
         }
 
         public void Favorite_CanExecute(object sender, CanExecuteRoutedEventArgs args)
