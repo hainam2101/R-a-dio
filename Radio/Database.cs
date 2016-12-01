@@ -98,7 +98,8 @@ namespace Radio
                 Table, Favorite, Fav, Name, Song);
             var sqliteCMD = new SQLiteCommand(cmd, conn);
             sqliteCMD.Parameters.Add(new SQLiteParameter(Song, name));
-            sqliteCMD.Parameters.Add(new SQLiteParameter(Fav, favorite.ToString()));
+            //sqliteCMD.Parameters.Add(new SQLiteParameter(Fav, favorite.ToString()));
+            sqliteCMD.Parameters.Add(new SQLiteParameter(Fav, (favorite) ? 1 : 0));
             sqliteCMD.ExecuteNonQuery();
         }
 
@@ -131,8 +132,20 @@ namespace Radio
 
         public static bool ExistsRecord(string name, SQLiteConnection conn)
         {
-            //var cmd = string
-            return false;
+            var cmd = String.Format("SELECT * FROM {0} WHERE {1} = {2}",
+                Table, Name, Song);
+            var sqliteCMD = new SQLiteCommand(cmd, conn);
+            sqliteCMD.Parameters.Add(new SQLiteParameter(Song, name));
+            var reader = sqliteCMD.ExecuteReader();
+
+            if (reader.Read())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>

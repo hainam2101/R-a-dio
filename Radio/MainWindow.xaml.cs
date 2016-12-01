@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
+using System.Diagnostics;
+
 namespace Radio
 {
     /// <summary>
@@ -105,11 +107,11 @@ namespace Radio
 
             Updater.NeedToUpdate(playingNow, tbSong,
                      tbDJName/*, textBlockListenersValue*/,
-                     tbCurrentSecond, tbLastSecond, pBar, imgDJ, t);
+                     tbCurrentSecond, tbLastSecond, pBar, imgDJ, t, favOrUnfavSong);
 
             t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(playingNow, tbSong,
                      tbDJName/*, textBlockListenersValue*/,
-                     tbCurrentSecond, tbLastSecond, pBar, imgDJ, t));
+                     tbCurrentSecond, tbLastSecond, pBar, imgDJ, t, favOrUnfavSong));
             t.Start();
         }
 
@@ -178,19 +180,55 @@ namespace Radio
 
         public void Favorite_Execute(object sender, ExecutedRoutedEventArgs args)
         {
-            //System.Windows.Forms.MessageBox.Show("Added to favorites!"); // Dummy placeholder
-            if (isFavorite)
+            if (Updater.DBConnection == null)
             {
-                favOrUnfavSong.Content = "NoFavorite";
+                // Currently setting one silently.
+                if (!Database.ExistsDB())
+                {
+                    Database.CreateDBFileAndTable();
+                }
+                
+                Updater.ConnectToDB();
+                //return; // Here we will ask for the user to create a DB or create one silently.
+            }
+
+            if (Database.ExistsRecord(tbSong.Text, Updater.DBConnection))
+            {
+                if (Database.ExistsRecordAndIsFavorite(tbSong.Text, Updater.DBConnection))
+                {
+                    Database.UpdateRecord(tbSong.Text, false, Updater.DBConnection);
+                    favOrUnfavSong.Content = Updater.NoFavorite;
+
+                    Debug.Print("ExistsRecordAndIsFavorite make Favorite to false");
+                }
+                else
+                {
+                    Database.UpdateRecord(tbSong.Text, true, Updater.DBConnection);
+                    favOrUnfavSong.Content = Updater.Favorite;
+
+                    Debug.Print("ExistsRecord and is not favorite, make it favorite");
+                }
             }
             else
             {
-                favOrUnfavSong.Content = "Favorite";
+                Database.InsertRecord(tbSong.Text, Updater.DBConnection);
+                favOrUnfavSong.Content = Updater.Favorite;
+
+                Debug.Print("Record doesn't exists, creating one.");
             }
-
-            isFavorite = !isFavorite;
-
         }
+
+        //System.Windows.Forms.MessageBox.Show("Added to favorites!"); // Dummy placeholder
+        /*if (isFavorite)
+        {
+            favOrUnfavSong.Content = Updater.NoFavorite;
+        }
+        else
+        {
+            favOrUnfavSong.Content = Updater.Favorite;
+        }
+
+        isFavorite = !isFavorite;*/
 
         public void Favorite_CanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
