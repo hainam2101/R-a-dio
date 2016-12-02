@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using System.Windows.Forms;
+using System.Data.SQLite;
 
 namespace Radio
 {
@@ -24,6 +25,10 @@ namespace Radio
     {
         bool isMainShowed;
         bool isPlaying;
+        bool existsDB;
+
+        SQLiteConnection DBConn;
+
         Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
 
         public static MiniPlayer mp;
@@ -52,10 +57,16 @@ namespace Radio
             bindingView.CanExecute += MinimizeOrMaximize_CanExecute;
             CommandBindings.Add(bindingView);
 
+            // Command for the favorite button
+            favOrUnfavSong.Command = FavoriteCommand.Favorite;
+            CommandBinding bindingFav = new CommandBinding();
+            bindingFav.Command = FavoriteCommand.Favorite;
+            bindingFav.Executed += Favorite_Execute;
+            bindingFav.CanExecute += Favorite_CanExecute;
+            CommandBindings.Add(bindingFav);
+
             RadioUpdater();
         }
-
-        
 
         void RadioUpdater()
         {
@@ -64,17 +75,33 @@ namespace Radio
             // Pass this window
             mp.SetOtherView(this);
 
+            // Database exists?
+            if (Database.ExistsDB())
+            {
+                existsDB = true;   
+            }
+            else
+            {
+                existsDB = false;
+            }
+
+            if (existsDB)
+            {
+                DBConn = Database.CreateDBConnection();
+                DBConn.Open();
+            }
+
             Timer t = new Timer();
             t.Interval = (int) Player.TickMode.NormalMode;
             Song playingNow = new Song();
 
             Updater.NeedToUpdate(playingNow, tbSong,
                      tbDJName/*, textBlockListenersValue*/,
-                     tbCurrentSecond, tbLastSecond, pBar, imgDJ, t);
+                     tbCurrentSecond, tbLastSecond, pBar, imgDJ, t, favOrUnfavSong);
 
             t.Tick += new EventHandler((sender, e) => Updater.NeedToUpdate(playingNow, tbSong,
                      tbDJName/*, textBlockListenersValue*/,
-                     tbCurrentSecond, tbLastSecond, pBar, imgDJ, t));
+                     tbCurrentSecond, tbLastSecond, pBar, imgDJ, t, favOrUnfavSong));
             t.Start();
         }
 
@@ -140,5 +167,46 @@ namespace Radio
         {
             args.CanExecute = true;
         }
+
+        // Also: Do a heavy cleaning of the Database class and here.
+        public async void Favorite_Execute(object sender, ExecutedRoutedEventArgs args)
+        {
+            if (Updater.DBConnection == null)
+            {
+                // Currently setting one silently.
+                if (!Database.ExistsDB())
+                {
+                    await Database.CreateDBFileAndTableAsync();
+                }
+                
+                Updater.ConnectToDB();
+                //return; // Here we will ask for the user to create a DB or create one silently.
+            }
+
+            if (await Database.ExistsRecordAsync(tbSong.Text, Updater.DBConnection))
+            {
+                if (await Database.ExistsRecordAndIsFavoriteAsync(tbSong.Text, Updater.DBConnection))
+                {
+                    await Database.UpdateRecordAsync(tbSong.Text, false, Updater.DBConnection);
+                    favOrUnfavSong.Content = Updater.NoFavorite;
+                }
+                else
+                {
+                    await Database.UpdateRecordAsync(tbSong.Text, true, Updater.DBConnection);
+                    favOrUnfavSong.Content = Updater.Favorite;
+                }
+            }
+            else
+            {
+                await Database.InsertRecordAsync(tbSong.Text, Updater.DBConnection);
+                favOrUnfavSong.Content = Updater.Favorite;
+            }
+        }
+
+        public void Favorite_CanExecute(object sender, CanExecuteRoutedEventArgs args)
+        {
+            args.CanExecute = true;
+        }
+
     }
 }

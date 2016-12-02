@@ -22,9 +22,12 @@ namespace Radio
         public string DjId { get; private set; }
         public int Listeners { get; set; }
 
+
+
         private int _startTime;
         private int _endTime;
         private int _currentTime;
+        private bool _isFavorite;
 
         public DjImage Image;
 
@@ -75,6 +78,28 @@ namespace Radio
         {
             get { return TotalSeconds(Math.Abs(_startTime - _currentTime)); }
             private set { }
+        }
+
+        public bool IsFavorite
+        {
+            get { return _isFavorite; }
+        }
+
+        public bool SetFavorite
+        {
+            set
+            {
+                if (Name != null)
+                {
+
+                }
+            }
+        }
+
+        public bool ExistsSongInDB()
+        {
+            //
+            return false;
         }
 
         public Song()
@@ -132,6 +157,13 @@ namespace Radio
                     CurrentTime = jsonData.main.current;
                     EndTime = jsonData.main.end_time;
                     DjId = jsonData.main.dj.id;
+
+                    // Here we're gonna check if the songs is in the DB and is favorite to populate the heart icon in the
+                    // MainWindow. It's here due the async capabilities. Also, if we gonna re-use the DB connection here
+                    // and in the MainWindow, maybe we will need to create a global in the MainWindow and pass it through
+                    // dependency injection.
+                    //_isFavorite = Database.ExistsRecordAndIsFavorite()
+
                 }
                 catch (Exception err)
                 {

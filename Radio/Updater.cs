@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Controls;
+
+using System.Data.SQLite;
 
 namespace Radio
 {
@@ -16,6 +17,19 @@ namespace Radio
     {
         static bool _hasStarted = false;
         static AsyncException<Exception> errorWhileFetching = new AsyncException<Exception>();
+
+        public static string Favorite = "Favorite";
+        public static string NoFavorite = "NoFavorite";
+
+        public static SQLiteConnection DBConnection;
+
+        static Updater()
+        {
+            if (Database.ExistsDB())
+            {
+                ConnectToDB();
+            }
+        }
 
         /// <summary>
         /// Checks if the songs has finished to update the showed data, if not, just update the slider.
@@ -29,8 +43,11 @@ namespace Radio
         /// <param name="CurrentTime"></param>
         /// <param name="EndTime"></param>
         /// <param name="Sldr"></param>
-        public static async void NeedToUpdate(Song Current, TextBlock Song, TextBlock DJ/*, TextBlock Listeners*/, TextBlock CurrentTime, TextBlock EndTime, System.Windows.Controls.ProgressBar Sldr, Image Img, Timer timer)
-        {   
+        public static async void NeedToUpdate(Song Current, TextBlock Song, TextBlock DJ/*, TextBlock Listeners*/,
+            TextBlock CurrentTime, TextBlock EndTime, System.Windows.Controls.ProgressBar Sldr, Image Img, Timer timer,
+            System.Windows.Controls.CheckBox songFavorite)
+        {
+
             if (Current.ShouldUpdateSong() || !_hasStarted)
             {
                 await Current.GetNewSongData(errorWhileFetching);
@@ -56,12 +73,28 @@ namespace Radio
                 Current.Image.LoadNewImage();
                 Img.Source = Current.Image.Image;
                 _hasStarted = true;
+
+                if (DBConnection != null && await Database.ExistsRecordAndIsFavoriteAsync(Song.Text, DBConnection))
+                {
+                    songFavorite.Content = Favorite;
+                }
+                else
+                {
+                    songFavorite.Content = NoFavorite;
+                }
+
             }
             else
             {
                 CurrentTime.Text = Current.CurrentTime;
                 Sldr.Value = Current.DoubleCurrentTime;
             }
+        }
+
+        public static void ConnectToDB()
+        {
+            DBConnection = Database.CreateDBConnection();
+            DBConnection.Open();
         }
     }
 }
