@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Controls;
 
@@ -75,7 +74,7 @@ namespace Radio
                 Img.Source = Current.Image.Image;
                 _hasStarted = true;
 
-                if (DBConnection != null && Database.ExistsRecordAndIsFavorite(Song.Text, DBConnection))
+                if (DBConnection != null && await Database.ExistsRecordAndIsFavoriteAsync(Song.Text, DBConnection))
                 {
                     songFavorite.Content = Favorite;
                 }

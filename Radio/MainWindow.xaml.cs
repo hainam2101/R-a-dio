@@ -16,8 +16,6 @@ using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
-using System.Diagnostics;
-
 namespace Radio
 {
     /// <summary>
@@ -27,7 +25,6 @@ namespace Radio
     {
         bool isMainShowed;
         bool isPlaying;
-        bool isFavorite;
         bool existsDB;
 
         SQLiteConnection DBConn;
@@ -71,8 +68,6 @@ namespace Radio
             RadioUpdater();
         }
 
-        
-
         void RadioUpdater()
         {
             mp = new MiniPlayer();
@@ -87,13 +82,8 @@ namespace Radio
             }
             else
             {
-                // Ask the user to create one: I think the creating dialog should be done when the user press the favorite button.
-                /*Database.CreateDBFileAndTable();
-                existsDB = true;*/
                 existsDB = false;
             }
-
-            System.Windows.Forms.MessageBox.Show(Database.CurrentPath);
 
             if (existsDB)
             {
@@ -178,61 +168,45 @@ namespace Radio
             args.CanExecute = true;
         }
 
-        public void Favorite_Execute(object sender, ExecutedRoutedEventArgs args)
+        // Also: Do a heavy cleaning of the Database class and here.
+        public async void Favorite_Execute(object sender, ExecutedRoutedEventArgs args)
         {
             if (Updater.DBConnection == null)
             {
                 // Currently setting one silently.
                 if (!Database.ExistsDB())
                 {
-                    Database.CreateDBFileAndTable();
+                    await Database.CreateDBFileAndTableAsync();
                 }
                 
                 Updater.ConnectToDB();
                 //return; // Here we will ask for the user to create a DB or create one silently.
             }
 
-            if (Database.ExistsRecord(tbSong.Text, Updater.DBConnection))
+            if (await Database.ExistsRecordAsync(tbSong.Text, Updater.DBConnection))
             {
-                if (Database.ExistsRecordAndIsFavorite(tbSong.Text, Updater.DBConnection))
+                if (await Database.ExistsRecordAndIsFavoriteAsync(tbSong.Text, Updater.DBConnection))
                 {
-                    Database.UpdateRecord(tbSong.Text, false, Updater.DBConnection);
+                    await Database.UpdateRecordAsync(tbSong.Text, false, Updater.DBConnection);
                     favOrUnfavSong.Content = Updater.NoFavorite;
-
-                    Debug.Print("ExistsRecordAndIsFavorite make Favorite to false");
                 }
                 else
                 {
-                    Database.UpdateRecord(tbSong.Text, true, Updater.DBConnection);
+                    await Database.UpdateRecordAsync(tbSong.Text, true, Updater.DBConnection);
                     favOrUnfavSong.Content = Updater.Favorite;
-
-                    Debug.Print("ExistsRecord and is not favorite, make it favorite");
                 }
             }
             else
             {
-                Database.InsertRecord(tbSong.Text, Updater.DBConnection);
+                await Database.InsertRecordAsync(tbSong.Text, Updater.DBConnection);
                 favOrUnfavSong.Content = Updater.Favorite;
-
-                Debug.Print("Record doesn't exists, creating one.");
             }
         }
-
-        //System.Windows.Forms.MessageBox.Show("Added to favorites!"); // Dummy placeholder
-        /*if (isFavorite)
-        {
-            favOrUnfavSong.Content = Updater.NoFavorite;
-        }
-        else
-        {
-            favOrUnfavSong.Content = Updater.Favorite;
-        }
-
-        isFavorite = !isFavorite;*/
 
         public void Favorite_CanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = true;
         }
+
     }
 }
