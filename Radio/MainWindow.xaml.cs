@@ -72,6 +72,9 @@ namespace Radio
         {
             mp = new MiniPlayer();
 
+            var list = new SongList();
+            list.Show();
+
             // Pass this window
             mp.SetOtherView(this);
 
