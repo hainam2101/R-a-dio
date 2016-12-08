@@ -120,6 +120,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="PlayOrStopCommand.cs" />
     <Compile Include="ReadyFullStream.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="SongList.xaml.cs">
       <DependentUpon>SongList.xaml</DependentUpon>

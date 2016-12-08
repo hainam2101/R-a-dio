@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace Radio
 {
     /// <summary>
@@ -19,6 +20,8 @@ namespace Radio
     /// </summary>
     public partial class SongList : Window
     {
+
+        
 
         public string item = "Hello";
 
@@ -37,5 +40,8 @@ namespace Radio
             /*SongContainer.DataContext = items;
             SongContainer.ItemsSource = items;*/
         }
+
+        
+
     }
 }

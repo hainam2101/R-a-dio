@@ -78,6 +78,8 @@ namespace Radio
             // Pass this window
             mp.SetOtherView(this);
 
+            /* TODO: DBConn is unused. Updater class creates automatically the connection, 
+            therefore in that class we should create the DB if it dosn't exists.*/
             // Database exists?
             if (Database.ExistsDB())
             {
