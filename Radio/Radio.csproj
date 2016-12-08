@@ -125,7 +125,7 @@
     <Compile Include="SongList.xaml.cs">
       <DependentUpon>SongList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SongPOCO.cs" />
+    <Compile Include="SongFromList.cs" />
     <Compile Include="Updater.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

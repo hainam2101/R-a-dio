@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Radio
 {
-    public class SongPOCO
+    public class SongFromList
     {
 
         RelayCommand _deleteSong;
