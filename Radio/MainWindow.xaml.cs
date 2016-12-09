@@ -65,6 +65,14 @@ namespace Radio
             bindingFav.CanExecute += Favorite_CanExecute;
             CommandBindings.Add(bindingFav);
 
+            // Command for the show list button
+            showSongList.Command = ShowListCommand.ShowList;
+            CommandBinding bindingShowList = new CommandBinding();
+            bindingShowList.Command = ShowListCommand.ShowList;
+            bindingShowList.Executed += ShowList_Execute;
+            bindingShowList.CanExecute += ShowList_CanExecute;
+            CommandBindings.Add(bindingShowList);
+
             RadioUpdater();
         }
 
@@ -72,8 +80,8 @@ namespace Radio
         {
             mp = new MiniPlayer();
 
-            var list = new SongList();
-            list.Show();
+            /*var list = new SongList();
+            list.Show();*/
 
             // Pass this window
             mp.SetOtherView(this);
@@ -83,7 +91,7 @@ namespace Radio
             // Database exists?
             if (Database.ExistsDB())
             {
-                existsDB = true;   
+                existsDB = true;
             }
             else
             {
@@ -97,7 +105,7 @@ namespace Radio
             }
 
             Timer t = new Timer();
-            t.Interval = (int) Player.TickMode.NormalMode;
+            t.Interval = (int)Player.TickMode.NormalMode;
             Song playingNow = new Song();
 
             Updater.NeedToUpdate(playingNow, tbSong,
@@ -183,7 +191,7 @@ namespace Radio
                 {
                     await Database.CreateDBFileAndTableAsync();
                 }
-                
+
                 Updater.ConnectToDB();
                 //return; // Here we will ask for the user to create a DB or create one silently.
             }
@@ -209,6 +217,17 @@ namespace Radio
         }
 
         public void Favorite_CanExecute(object sender, CanExecuteRoutedEventArgs args)
+        {
+            args.CanExecute = true;
+        }
+
+        public void ShowList_Execute(object sender, ExecutedRoutedEventArgs args)
+        {
+            var list = new SongList();
+            list.Show();
+        }
+
+        public void ShowList_CanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = true;
         }
