@@ -117,6 +117,7 @@
     <Compile Include="MiniPlayer.xaml.cs">
       <DependentUpon>MiniPlayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Page.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayOrStopCommand.cs" />
     <Compile Include="ReadyFullStream.cs" />

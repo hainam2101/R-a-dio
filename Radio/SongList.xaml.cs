@@ -43,8 +43,14 @@ namespace Radio
 
         async void CreatePagination()
         {
-            int numberOfPages = await Database.NumberOfPages(Updater.DBConnection);
-            PaginationNumber.Text = numberOfPages.ToString();
+            /*int numberOfPages = await Database.NumberOfPages(Updater.DBConnection);
+            PaginationNumber.Text = numberOfPages.ToString();*/
+            var items = new List<Page>();
+            for (int i = 0; i < 5; ++i)
+            {
+                items.Add(new Page() { Number = i + 1, IsSelected = (i == 0) ? true : false });
+            }
+            PaginationNumber.ItemsSource = items;
         }
 
     }

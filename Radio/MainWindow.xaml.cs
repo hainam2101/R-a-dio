@@ -225,6 +225,7 @@ namespace Radio
 
         public void ShowList_Execute(object sender, ExecutedRoutedEventArgs args)
         {
+            // TODO: This causes a heavy blocking in the UI thread.
             var list = new SongList();
             list.Show();
             isListShowed = true;

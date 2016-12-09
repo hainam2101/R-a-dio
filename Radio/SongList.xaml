@@ -30,6 +30,7 @@
                    Width="{Binding Path=Width}" Height="{Binding Path=Height}" RenderOptions.BitmapScalingMode="Fant"/>
         </ControlTemplate>
 
+        <!-- Song items -->
         <DataTemplate x:Key="list">
             <Grid>
                 <Grid.RowDefinitions>
@@ -51,9 +52,19 @@
                         Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding Path=ID}"
                         local:Icons.Image="Resources/Images/TrashIcon.png" Margin="0,0,10,0" Width="16" Height="16" HorizontalAlignment="Right"/>
             </Grid>
-            
-            
         </DataTemplate>
+
+        <!-- Pagination buttons -->
+        <DataTemplate x:Key ="pagination">
+            <Button Name="pageButton" Content="{Binding Number}" FontWeight="{Binding Selected}" Width="20" Height="20" Margin="5"/>
+            <!--<DataTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="Button.FontWeight" Value="Bold"/>
+                    <Setter TargetName="pageButton" Property="Visibility" Value="Hidden"/>
+                </Trigger>
+            </DataTemplate.Triggers>-->
+        </DataTemplate>
+        
     </Window.Resources>
     <Grid Background="#222222" ShowGridLines="True">
         <Grid.RowDefinitions>
@@ -64,6 +75,14 @@
         <TextBlock Text="Name" Foreground="#787878"/>
         <ItemsControl Grid.Row="1" Name="newCont" VerticalAlignment="Center"
                  ItemTemplate="{StaticResource list}"/>
-        <TextBlock Grid.Row="2" Name="PaginationNumber" HorizontalAlignment="Center"/>
+        <!--<TextBlock Grid.Row="2" Name="PaginationNumber" HorizontalAlignment="Center"/>-->
+        <ItemsControl Grid.Row="2" Name="PaginationNumber" HorizontalAlignment="Center"
+                      ItemTemplate="{StaticResource pagination}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
     </Grid>
 </Window>
