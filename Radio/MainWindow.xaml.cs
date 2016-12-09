@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
@@ -26,6 +27,7 @@ namespace Radio
         bool isMainShowed;
         bool isPlaying;
         bool existsDB;
+        bool isListShowed;
 
         SQLiteConnection DBConn;
 
@@ -225,11 +227,18 @@ namespace Radio
         {
             var list = new SongList();
             list.Show();
+            isListShowed = true;
+            list.Closing += ToggleSongList;
         }
 
         public void ShowList_CanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
-            args.CanExecute = true;
+            args.CanExecute = !isListShowed;
+        }
+
+        void ToggleSongList(object sender, CancelEventArgs args)
+        {
+            isListShowed = false;
         }
 
     }
