@@ -33,13 +33,18 @@ namespace Radio
         {
             InitializeComponent();
             newCont.ItemsSource = items;
+            CreatePagination();
             /*favCont.ItemsSource = items;
             delCont.ItemsSource = items;*/
             /*SongContainer.DataContext = items;
             SongContainer.ItemsSource = items;*/
         }
 
-        
+        async void CreatePagination()
+        {
+            int numberOfPages = await Database.NumberOfPages(Updater.DBConnection);
+            PaginationNumber.Text = numberOfPages.ToString();
+        }
 
     }
 }

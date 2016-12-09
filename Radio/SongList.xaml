@@ -59,10 +59,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Name" Foreground="#787878"/>
         <ItemsControl Grid.Row="1" Name="newCont" VerticalAlignment="Center"
                  ItemTemplate="{StaticResource list}"/>
-
+        <TextBlock Grid.Row="2" Name="PaginationNumber" HorizontalAlignment="Center"/>
     </Grid>
 </Window>

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Data.SQLite;
 
+using System.Diagnostics;
+
 namespace Radio
 {
     class Database
@@ -16,6 +18,7 @@ namespace Radio
         public static readonly string CurrentPath = Directory.GetCurrentDirectory() + "\\";
         const string _DBFile = "favorites.sqlite";
         static readonly string _fullDBPath = CurrentPath + _DBFile;
+        const int _ItemsListSize = 10; // Number of items in a page.
 
         #endregion // Database File Path
 
@@ -223,6 +226,38 @@ namespace Radio
             {
                 Console.WriteLine("ID: " + reader[Song_ID] + "\tSong: " + reader[Name] + "\tFavorite: " + reader[Favorite]);
             }
+        }
+
+        public static async Task<List<SongFromList>> GetAllRecords(SQLiteConnection conn)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the number of pages that are needed to show all the songs in the DB.
+        /// The quantity of items per page is determine by _ItemsListSize.
+        /// This is useful to get the quantity of buttons for the "pagination" control.
+        /// </summary>
+        /// <param name="conn">An opened DB connection.</param>
+        /// <returns></returns>
+        public static async Task<int> NumberOfPages(SQLiteConnection conn)
+        {
+            var sqlSelect = String.Format("SELECT COUNT(*) FROM {0}", Table);
+            var sqliteCMD = new SQLiteCommand(sqlSelect, conn);
+            int completePages = 0;
+            var count = await sqliteCMD.ExecuteScalarAsync();
+            completePages = Convert.ToInt32(count);
+
+            int pages = 0;
+            if ((completePages % _ItemsListSize) != 0)
+            {
+                ++pages;
+            }
+
+            int temp = completePages / _ItemsListSize;
+            pages += temp;
+
+            return pages;
         }
 
         #endregion // Database Operations

@@ -12,8 +12,8 @@ namespace Radio
     public class SongFromList
     {
 
-        RelayCommand _deleteSong;
-        RelayCommand _toggleFavoriteSong;
+        static RelayCommand _deleteSong;
+        static RelayCommand _toggleFavoriteSong;
 
         public string Name { get; set; }
         public int ID { get; set; }
@@ -24,15 +24,15 @@ namespace Radio
 
         #region Commands
 
-        public ICommand DeleteCommand
+        static public ICommand DeleteCommand
         {
             get
             {
                 if (_deleteSong == null)
                 {
                     _deleteSong = new RelayCommand(
-                        param => this.DeleteSong(param),
-                        param => this.CanExecute()
+                        param => DeleteSong(param),
+                        param => CanExecute()
                         );
                 }
 
@@ -40,15 +40,15 @@ namespace Radio
             }
         }
 
-        public ICommand FavoriteCommand
+        static public ICommand FavoriteCommand
         {
             get
             {
                 if (_toggleFavoriteSong == null)
                 {
                     _toggleFavoriteSong = new RelayCommand(
-                        param => this.ToggleFavorite(param),
-                        param => this.CanExecute()
+                        param => ToggleFavorite(param),
+                        param => CanExecute()
                         );
                 }
 
@@ -58,7 +58,7 @@ namespace Radio
 
         #endregion // Commands
 
-        void DeleteSong(object id)
+        static void DeleteSong(object id)
         {
             int val = (int)id;
             /*
@@ -67,14 +67,14 @@ namespace Radio
             Database.DeleteRecordAsync(val, Updater.DBConnection);
         }
 
-        void ToggleFavorite(object id)
+        static void ToggleFavorite(object id)
         {
             int val = (int)id;
             var msg = String.Format("ToggleFavorite command, id is: {0}", val.ToString());
             MessageBox.Show(msg);
         }
 
-        bool CanExecute()
+        static bool CanExecute()
         {
             return (Updater.DBConnection == null) ? false : true;
         }
