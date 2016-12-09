@@ -32,7 +32,8 @@ namespace Radio
         public SongList()
         {
             InitializeComponent();
-            newCont.ItemsSource = items;
+            //newCont.ItemsSource = items;
+            newCont.ItemsSource = Database.GetRangeOfRecords(3, Updater.DBConnection).Result;
             CreatePagination();
             /*favCont.ItemsSource = items;
             delCont.ItemsSource = items;*/

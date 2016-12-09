@@ -233,6 +233,26 @@ namespace Radio
             return null;
         }
 
+        public static async Task<List<SongFromList>> GetRangeOfRecords(int atPage, SQLiteConnection conn)
+        {
+            atPage = PageToRow(atPage);
+
+            var range = new List<SongFromList>();
+            var sqlSelect = String.Format("SELECT * FROM {0} LIMIT {1}, {2}",
+                Table, atPage.ToString(), _ItemsListSize.ToString());
+            var sqliteCMD = new SQLiteCommand(sqlSelect, conn);
+            var reader = await sqliteCMD.ExecuteReaderAsync();
+
+            while(reader.Read())
+            {
+                range.Add(new SongFromList()
+                { Name = (string)reader[Name], IsFavorite = ((bool)reader[Favorite]), ID = Convert.ToInt32(reader[Song_ID]) }
+                );
+            }
+
+            return range;
+        }
+
         /// <summary>
         /// Gets the number of pages that are needed to show all the songs in the DB.
         /// The quantity of items per page is determine by _ItemsListSize.
@@ -258,6 +278,23 @@ namespace Radio
             pages += temp;
 
             return pages;
+        }
+
+        /// <summary>
+        /// Converts the selected page to the proper record (row) number.
+        /// For example if we pass the page 1, it will return 0 since the records start at that number,
+        /// if we pass the page 3 we will get the number 20, since the page 3 records span between the 20 and 30 records.
+        /// </summary>
+        /// <param name="page">The page selected, a positive, non-zero integer.</param>
+        /// <returns></returns>
+        static int PageToRow(int page)
+        {
+            if (page == 1)
+            {
+                return 0;
+            }
+
+            return (page * _ItemsListSize) - _ItemsListSize;
         }
 
         #endregion // Database Operations
