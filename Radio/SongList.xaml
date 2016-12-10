@@ -75,7 +75,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Name" Foreground="#787878"/>
-        <ItemsControl Grid.Row="1" Name="newCont" VerticalAlignment="Center"
+        <ItemsControl Grid.Row="1" Name="currPageList" VerticalAlignment="Center"
                  ItemTemplate="{StaticResource list}"/>
         <!--<TextBlock Grid.Row="2" Name="PaginationNumber" HorizontalAlignment="Center"/>-->
         <ItemsControl Grid.Row="2" Name="PaginationNumber" HorizontalAlignment="Center"

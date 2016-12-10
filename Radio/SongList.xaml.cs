@@ -45,14 +45,17 @@ namespace Radio
         {
             /*int numberOfPages = await Database.NumberOfPages(Updater.DBConnection);
             PaginationNumber.Text = numberOfPages.ToString();*/
-            var pagesqt = Database.NumberOfPages(Updater.DBConnection).Result;
+            // current
+            /*var pagesqt = Database.NumberOfPages(Updater.DBConnection).Result;
             var items = new List<Page>();
             for (int i = 0; i < pagesqt; ++i)
             {
                 // TODO: I don't like passing newCont to every new object, it's dumb since that is saved in a static member.
                 items.Add(new Page(newCont) { Number = i + 1, IsSelected = (i == 0) ? true : false });
             }
-            PaginationNumber.ItemsSource = items;
+            PaginationNumber.ItemsSource = items;*/
+            PaginationNumber.ItemsSource = Page.GetNewButtonList(currPageList);
+
         }
 
     }
