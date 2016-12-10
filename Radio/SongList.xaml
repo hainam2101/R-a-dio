@@ -56,7 +56,9 @@
 
         <!-- Pagination buttons -->
         <DataTemplate x:Key ="pagination">
-            <Button Name="pageButton" Content="{Binding Number}" FontWeight="{Binding Selected}" Width="20" Height="20" Margin="5"/>
+            <Button Name="pageButton" Content="{Binding Number}" FontWeight="{Binding Selected}"
+                    Command="{Binding ChangePage}" CommandParameter="{Binding Number}"
+                    Width="20" Height="20" Margin="5"/>
             <!--<DataTemplate.Triggers>
                 <Trigger Property="IsEnabled" Value="True">
                     <Setter Property="Button.FontWeight" Value="Bold"/>
