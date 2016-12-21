@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Radio"
         mc:Ignorable="d"
-        Title="SongList" MinWidth="300" Height="300" Width="300">
+        Title="Favorite Songs"  MinHeight="400" MinWidth="350" Width="400">
     <Window.Resources>
 
         <!-- Nice font -->
@@ -68,15 +68,19 @@
         </DataTemplate>
         
     </Window.Resources>
-    <Grid Background="#222222" ShowGridLines="True">
+    <Grid Background="#222222" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Name" Foreground="#787878"/>
-        <ItemsControl Grid.Row="1" Name="currPageList" VerticalAlignment="Center"
+        <TextBlock Text="Name" Foreground="#787878" FontSize="18" HorizontalAlignment="Center"/>
+        <!-- Song list -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ItemsControl Name="currPageList" VerticalAlignment="Center"
                  ItemTemplate="{StaticResource list}"/>
+        </ScrollViewer>
+
         <!--<TextBlock Grid.Row="2" Name="PaginationNumber" HorizontalAlignment="Center"/>-->
         <ItemsControl Grid.Row="2" Name="PaginationNumber" HorizontalAlignment="Center"
                       ItemTemplate="{StaticResource pagination}">

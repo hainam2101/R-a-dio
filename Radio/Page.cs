@@ -106,6 +106,7 @@ namespace Radio
             init = false;
             CurrentNumber = 1;
             var items = new List<Page>();
+
             var pagesqt = Database.NumberOfPages(Updater.DBConnection).Result;
             for (int i = 0; i < pagesqt; ++i)
             {

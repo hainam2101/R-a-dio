@@ -21,6 +21,9 @@ namespace Radio
         public static string Favorite = "Favorite";
         public static string NoFavorite = "NoFavorite";
 
+        /// <summary>
+        /// The current DBConnection, check for null before using.
+        /// </summary>
         public static SQLiteConnection DBConnection;
 
         static Updater()

@@ -26,10 +26,10 @@ namespace Radio
     {
         bool isMainShowed;
         bool isPlaying;
-        bool existsDB;
+
         bool isListShowed;
 
-        SQLiteConnection DBConn;
+        SQLiteConnection DBConn; // TODO: Unused
 
         Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
 
@@ -87,24 +87,6 @@ namespace Radio
 
             // Pass this window
             mp.SetOtherView(this);
-
-            /* TODO: DBConn is unused. Updater class creates automatically the connection, 
-            therefore in that class we should create the DB if it dosn't exists.*/
-            // Database exists?
-            if (Database.ExistsDB())
-            {
-                existsDB = true;
-            }
-            else
-            {
-                existsDB = false;
-            }
-
-            if (existsDB)
-            {
-                DBConn = Database.CreateDBConnection();
-                DBConn.Open();
-            }
 
             Timer t = new Timer();
             t.Interval = (int)Player.TickMode.NormalMode;
@@ -234,7 +216,8 @@ namespace Radio
 
         public void ShowList_CanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
-            args.CanExecute = !isListShowed;
+            //args.CanExecute = !isListShowed;
+            args.CanExecute = !isListShowed && Updater.DBConnection != null;
         }
 
         void ToggleSongList(object sender, CancelEventArgs args)
