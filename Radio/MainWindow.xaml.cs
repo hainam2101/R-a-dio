@@ -17,6 +17,8 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
+using System.Security.Permissions;
+
 namespace Radio
 {
     /// <summary>
@@ -37,6 +39,11 @@ namespace Radio
         public MainWindow()
         {
             InitializeComponent();
+#if DEBUG
+            ShowDBPath();
+            CheckDbPermissions();
+#endif
+
 
             // Adds the event handler to close all the windows from MainWindow
             this.Closing += new System.ComponentModel.CancelEventHandler(closeApp);
@@ -224,6 +231,29 @@ namespace Radio
         {
             isListShowed = false;
         }
+
+        #region Debug Methods
+
+        void ShowDBPath()
+        {
+            System.Windows.Forms.MessageBox.Show(Database._fullDBPath);
+        }
+
+        void CheckDbPermissions()
+        {
+            try
+            {
+                System.Windows.Forms.MessageBox.Show("Checking DB permissions...");
+                new FileIOPermission(FileIOPermissionAccess.Read, Database._fullDBPath).Demand();
+                System.Windows.Forms.MessageBox.Show("Permissions checked...");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+        }
+
+        #endregion // Debug Methods
 
     }
 }

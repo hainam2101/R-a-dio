@@ -15,9 +15,11 @@ namespace Radio
     {
         #region Database File Path
 
-        public static readonly string CurrentPath = Directory.GetCurrentDirectory() + "\\";
+        // This writes into the folder where is installed the app, but almost always is readonly.
+        //public static readonly string CurrentPath = Directory.GetCurrentDirectory() + "\\";
+        public static readonly string CurrentPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Radio\\";
         const string _DBFile = "favorites.sqlite";
-        static readonly string _fullDBPath = CurrentPath + _DBFile;
+        public static readonly string _fullDBPath = CurrentPath + _DBFile; // Made public for testing purposes
         const int _ItemsListSize = 10; // Number of items in a page.
 
         #endregion // Database File Path
@@ -59,6 +61,7 @@ namespace Radio
 
             Task t = Task.Run(async () =>
             {
+                CreateDBFolder();
                 SQLiteConnection.CreateFile(_fullDBPath);
                 var dbConn = CreateDBConnection();
                 dbConn.Open();
@@ -81,6 +84,18 @@ namespace Radio
 
             // Exception in Open(): Data Source cannot be empty.  Use :memory: to open an in-memory database
             //m_DBConnection = new SQLiteConnection(currentPath  + "=" + DBFile + ";Version=3;");
+        }
+
+        /// <summary>
+        /// Creates the folder to the DB. (Just to no leave the Db laying in the AppData folder.)
+        /// </summary>
+        static void CreateDBFolder()
+        {
+            Directory.CreateDirectory(CurrentPath);
+            /*if (!Directory.Exists(CurrentPath))
+            {
+                Directory.CreateDirectory(CurrentPath);
+            }*/
         }
 
         /// <summary>

@@ -30,6 +30,12 @@ namespace Radio
         {
             if (Database.ExistsDB())
             {
+                // TODO: Fix this error.
+                /* The following line causes a clash error, it does after in deployment (when the app in in /Program Files/ folder.
+                 *  I think is due the DB (favorites.sql) not being with write (and modify) permissions.
+                 *  The funny thing is that it doesn't throws any exceptios, it just crashes.
+                 *  Just to be more exact, the problem is in Database.CreateDBConnection method.
+                 */
                 ConnectToDB();
             }
         }
@@ -96,8 +102,25 @@ namespace Radio
 
         public static void ConnectToDB()
         {
-            DBConnection = Database.CreateDBConnection();
-            DBConnection.Open();
+            /*  Update about th DB permissions error:
+             *  So with the catch we found that there's some DLLs that aren't included in the deploy for some reasons,
+             *  those are the SQLite interops (both for X64 and X86). See: http://puu.sh/sWVx7/064a79ff07.png
+             *  Also, finally found that we don't have write permissions for the DB. See: http://puu.sh/sWW0P/20e7d7793f.png
+             *   */
+            try
+            {
+                DBConnection = Database.CreateDBConnection();
+                DBConnection.Open();
+#if DEBUG
+                MessageBox.Show("No Exceptions, connection opened");
+#endif
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Exception found, can't connect to DB.\n" + err.Message);
+            }
+            /*DBConnection = Database.CreateDBConnection();
+            DBConnection.Open();*/
         }
     }
 }
