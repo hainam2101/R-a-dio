@@ -41,15 +41,14 @@
                     <ColumnDefinition MinWidth="16" Width="auto"/>
                     <ColumnDefinition MinWidth="16" Width="auto"/>
                 </Grid.ColumnDefinitions>
-
                 <TextBlock Style="{StaticResource SourceSansBold}" FontSize="18" Text="{Binding Name}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" Margin="0,0,20,0"/>
                 <CheckBox Name="favOrUnfavSong" Content="{Binding Favorite}"  Template="{StaticResource FavoriteOrUnfavorite}"
-                          Command="{Binding Path=FavoriteCommand}" CommandParameter="{Binding Path=ID}"
+                          Command="{Binding Path=FavoriteCommand}" CommandParameter="{Binding Path=ID}" Visibility="{Binding IsVisible}"
                           local:Icons.Image="Resources/Images/HeartUnselectedIcon.png"  local:IconsSelected.ImageSelected="Resources/Images/HeartSelectedIcon.png"
                           IsTabStop="False" Focusable="False" Width="16" Height="16" HorizontalAlignment="Right"/>
                 <!--<Button Grid.Column="1" Margin="0,0,10,0" Width="16" Height="16" HorizontalAlignment="Right">F</Button>-->
                 <Button Template="{StaticResource ImgButton}" Grid.Column="2"
-                        Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding Path=ID}"
+                        Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding Path=ID}" Visibility="{Binding IsVisible}"
                         local:Icons.Image="Resources/Images/TrashIcon.png" Margin="0,0,10,0" Width="16" Height="16" HorizontalAlignment="Right"/>
             </Grid>
         </DataTemplate>

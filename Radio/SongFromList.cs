@@ -14,13 +14,28 @@ namespace Radio
 
         static RelayCommand _deleteSong;
         static RelayCommand _toggleFavoriteSong;
+        public bool EmptyFavorites;
 
         public string Name { get; set; }
         public int ID { get; set; }
         public bool IsFavorite { get; set; }
         // Allows binding for a trigger
         public string Favorite { get { return IsFavorite.ToString(); } }
-
+        // Binds to the song's buttons to hide them in the case of showing the default message ("No favorites yet".)
+        public string IsVisible
+        {
+            get
+            {
+                if (EmptyFavorites)
+                {
+                    return "Collapsed";
+                }
+                else
+                {
+                    return "Visible";
+                }
+            }
+        }
 
         #region Commands
 
