@@ -148,7 +148,9 @@ namespace Radio
                     CurrentNumber = val;
             }
 
-            _controlList.ItemsSource = Database.GetRangeOfRecords(val, Updater.DBConnection).Result;
+            //_controlList.ItemsSource = Database.GetRangeOfRecords(val, Updater.DBConnection).Result;
+            SongFromList.CurrentList = Database.GetRangeOfRecords(val, Updater.DBConnection).Result;
+            _controlList.ItemsSource = SongFromList.CurrentList;
         }
 
         static bool ChangePage_CanExecute()
