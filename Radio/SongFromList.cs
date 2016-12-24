@@ -85,8 +85,10 @@ namespace Radio
         static void ToggleFavorite(object id)
         {
             int val = (int)id;
-            var msg = String.Format("ToggleFavorite command, id is: {0}", val.ToString());
-            MessageBox.Show(msg);
+            /*var msg = String.Format("ToggleFavorite command, id is: {0}", val.ToString());
+            MessageBox.Show(msg);*/
+            // TODO: Update property to propagate changes
+            Database.ToggleFavoriteByIDAsync(val, Updater.DBConnection);
         }
 
         static bool CanExecute()

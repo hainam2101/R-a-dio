@@ -312,6 +312,53 @@ namespace Radio
             return (page * _ItemsListSize) - _ItemsListSize;
         }
 
+        /// <summary>
+        /// Toggles the favorite column for the song.
+        /// </summary>
+        /// <param name="id">A non-negative number. (The function doesn't check for valid int.)</param>
+        /// <param name="conn">An opened DB connection.</param>
+        /// <returns></returns>
+        public static Task ToggleFavoriteByIDAsync(int id, SQLiteConnection conn)
+        {
+            var cmd = String.Format("UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
+                Table, Favorite, Fav, Song_ID, ID);
+            var sqliteCMD = new SQLiteCommand(cmd, conn);
+            Task t = Task.Run(async () =>
+            {
+                var fav = SongIsFavoriteByID(id, conn);
+                sqliteCMD.Parameters.Add(new SQLiteParameter(ID, id));
+                sqliteCMD.Parameters.Add(new SQLiteParameter(Fav, !(await fav)));
+                var reader = await sqliteCMD.ExecuteNonQueryAsync();
+            });
+
+            return t;
+        }
+
+        /// <summary>
+        /// Returns true if the song has been favorited based on the id.
+        /// </summary>
+        /// <param name="id">A non-negative number. (The function doesn't check for a valid int.)</param>
+        /// <param name="conn">An opened DB connection.</param>
+        /// <returns></returns>
+        static async Task<bool> SongIsFavoriteByID(int id, SQLiteConnection conn)
+        {
+            var cmd = String.Format("SELECT * FROM {0} WHERE {1} = {2}",
+                Table, Song_ID, ID);
+            var sqliteCMD = new SQLiteCommand(cmd, conn);
+            sqliteCMD.Parameters.Add(new SQLiteParameter(ID, id));
+            var reader = await sqliteCMD.ExecuteReaderAsync();
+
+            if (reader.Read())
+            {
+                if ((bool)reader[Favorite])
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #endregion // Database Operations
     }
 }
