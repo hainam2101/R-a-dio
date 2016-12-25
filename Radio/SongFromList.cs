@@ -15,10 +15,12 @@ namespace Radio
 
         static RelayCommand _deleteSong;
         static RelayCommand _toggleFavoriteSong;
+
         public bool EmptyFavorites;
         static List<SongFromList> _currentList;
-
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #region Public Properties
 
         public string Name { get; set; }
         public int ID { get; set; }
@@ -49,6 +51,8 @@ namespace Radio
             get { return _currentList; }
             set { _currentList = value; }
         }
+
+        #endregion // Public Properties
 
         #region Commands
 
@@ -86,6 +90,8 @@ namespace Radio
 
         #endregion // Commands
 
+        #region Private Methods
+
         static void DeleteSong(object id)
         {
             int val = (int)id;
@@ -104,7 +110,7 @@ namespace Radio
             int val = (int)id;
 
             Database.ToggleFavoriteByIDAsync(val, Updater.DBConnection);
-            
+
             // Used to Notify the changes in the favorites list view.
             var itemToggled = (from itm in CurrentList where itm.ID == val select itm).ToList();
 
@@ -129,6 +135,8 @@ namespace Radio
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+
+        #endregion // Private Methods
 
     }
 }

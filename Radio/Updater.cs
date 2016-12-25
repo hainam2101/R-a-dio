@@ -15,6 +15,12 @@ namespace Radio
     /// </summary>
     static class Updater
     {
+        /* TODO: Fix several things.
+         * 1. R-a-d.io lately has been sometimes offline, handle properly this (we get a lot of dialogs with the error server 502),
+         *    check: errorWhileFetching.WasRaised in the NeedToUpdate function.
+         * 2. Don't check every second when the currentSecond is > than songDuration, because sometimes a DJ is streaming and the
+         *    songDuration tends to be 0, which causes a lot site request.
+         *  */
         static bool _hasStarted = false;
         static AsyncException<Exception> errorWhileFetching = new AsyncException<Exception>();
 
@@ -30,12 +36,6 @@ namespace Radio
         {
             if (Database.ExistsDB())
             {
-                // TODO: Fix this error.
-                /* The following line causes a clash error, it does after in deployment (when the app in in /Program Files/ folder.
-                 *  I think is due the DB (favorites.sql) not being with write (and modify) permissions.
-                 *  The funny thing is that it doesn't throws any exceptios, it just crashes.
-                 *  Just to be more exact, the problem is in Database.CreateDBConnection method.
-                 */
                 ConnectToDB();
             }
         }
@@ -102,11 +102,6 @@ namespace Radio
 
         public static void ConnectToDB()
         {
-            /*  Update about th DB permissions error:
-             *  So with the catch we found that there's some DLLs that aren't included in the deploy for some reasons,
-             *  those are the SQLite interops (both for X64 and X86). See: http://puu.sh/sWVx7/064a79ff07.png
-             *  Also, finally found that we don't have write permissions for the DB. See: http://puu.sh/sWW0P/20e7d7793f.png
-             *   */
             try
             {
                 DBConnection = Database.CreateDBConnection();

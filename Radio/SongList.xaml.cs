@@ -32,30 +32,13 @@ namespace Radio
         public SongList()
         {
             InitializeComponent();
-            //newCont.ItemsSource = items;
-            //newCont.ItemsSource = Database.GetRangeOfRecords(Page.CurrentNumber, Updater.DBConnection).Result;
+
             CreatePagination();
-            /*favCont.ItemsSource = items;
-            delCont.ItemsSource = items;*/
-            /*SongContainer.DataContext = items;
-            SongContainer.ItemsSource = items;*/
         }
 
         async void CreatePagination()
         {
-            /*int numberOfPages = await Database.NumberOfPages(Updater.DBConnection);
-            PaginationNumber.Text = numberOfPages.ToString();*/
-            // current
-            /*var pagesqt = Database.NumberOfPages(Updater.DBConnection).Result;
-            var items = new List<Page>();
-            for (int i = 0; i < pagesqt; ++i)
-            {
-                // TODO: I don't like passing newCont to every new object, it's dumb since that is saved in a static member.
-                items.Add(new Page(newCont) { Number = i + 1, IsSelected = (i == 0) ? true : false });
-            }
-            PaginationNumber.ItemsSource = items;*/
             PaginationNumber.ItemsSource = Page.GetNewButtonList(currPageList);
-
         }
 
     }

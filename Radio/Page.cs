@@ -11,11 +11,6 @@ using System.ComponentModel;
 
 namespace Radio
 {
-    /* TODO:
-     * Knowed bugs:
-     * Fix:
-     * This awful codebase.
-     */
     class Page : INotifyPropertyChanged
     {
 
@@ -99,7 +94,7 @@ namespace Radio
         /// Gets the quantity of buttons based on the number of pages of songs favorites.
         /// Note that new Page()... initializes the list for the first page. (See constructor).
         /// </summary>
-        /// <param name="currPageList"></param>
+        /// <param name="currPageList">The list control from the view.</param>
         /// <returns></returns>
         static public List<Page> GetNewButtonList(ItemsControl currPageList)
         {
@@ -120,7 +115,6 @@ namespace Radio
                 var emptyListMessage = new List<SongFromList>();
                 emptyListMessage.Add(new SongFromList() { Name = "No favorites yet.", EmptyFavorites = true });
                 _controlList.ItemsSource = emptyListMessage;
-                //_controlList.
             }
 
             return items;
@@ -169,8 +163,5 @@ namespace Radio
         }
 
         #endregion // Private Methods
-
-
-
     }
 }
