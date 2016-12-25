@@ -22,9 +22,7 @@ namespace Radio
         #region Static Private Members
 
         static RelayCommand _changePage;
-        //static ItemsControl _controlList;
-
-        public static ItemsControl _controlList;
+        static ItemsControl _controlList;
 
         static bool init;
         static List<Page> _currentList;
@@ -69,7 +67,6 @@ namespace Radio
             if (CurrentNumber == 1 && !init)
             {
                 ChangePage_Execute(CurrentNumber);
-                //ChangePage_ExecuteAsync(CurrentNumber);
                 init = true;
             }
         }
@@ -85,7 +82,7 @@ namespace Radio
                 if (_changePage == null)
                 {
                     _changePage = new RelayCommand(
-                        param => ChangePage_ExecuteAsync(param),
+                        param => ChangePage_Execute(param),
                         param => ChangePage_CanExecute()
                         );
                 }
@@ -129,37 +126,6 @@ namespace Radio
             return items;
         }
 
-        // For new approach
-        static public List<Page> GetNewButtonList()
-        {
-            var items = new List<Page>();
-            //_controlList = currPageList;
-            Task t = Task.Run(() =>
-            {
-                init = false;
-                CurrentNumber = 1;
-                //var items = new List<Page>();
-
-                var pagesqt = Database.NumberOfPages(Updater.DBConnection).Result;
-                for (int i = 0; i < pagesqt; ++i)
-                {
-                    items.Add(new Page() { Number = i + 1, IsSelected = (i == 0) ? true : false });
-                }
-                _currentList = items;
-
-                if (_currentList.Count() == 0)
-                {
-                    var emptyListMessage = new List<SongFromList>();
-                    emptyListMessage.Add(new SongFromList() { Name = "No favorites yet.", EmptyFavorites = true });
-                    _controlList.ItemsSource = emptyListMessage;
-                    //_controlList.
-                }
-
-                
-            });
-            return items;
-        }
-
         #endregion // Public Methdos
 
         #region Private Methods
@@ -185,28 +151,6 @@ namespace Radio
             //_controlList.ItemsSource = Database.GetRangeOfRecords(val, Updater.DBConnection).Result;
             SongFromList.CurrentList = Database.GetRangeOfRecords(val, Updater.DBConnection).Result;
             _controlList.ItemsSource = SongFromList.CurrentList;
-        }
-
-        static void ChangePage_ExecuteAsync(object id)
-        {
-            Task t = Task.Run(() =>
-            {
-                int val = (int)id;
-
-                if (init)
-                {
-                    _currentList[CurrentNumber - 1].IsSelected = false;
-                    _currentList[CurrentNumber - 1].OnPropertyChanged("Selected");
-                    _currentList[val - 1].IsSelected = true;
-                    _currentList[val - 1].OnPropertyChanged("Selected");
-
-                    CurrentNumber = val;
-                }
-
-                //_controlList.ItemsSource = Database.GetRangeOfRecords(val, Updater.DBConnection).Result;
-                SongFromList.CurrentList = Database.GetRangeOfRecords(val, Updater.DBConnection).Result;
-                _controlList.ItemsSource = SongFromList.CurrentList;
-            });
         }
 
         static bool ChangePage_CanExecute()

@@ -34,19 +34,14 @@ namespace Radio
             InitializeComponent();
             //newCont.ItemsSource = items;
             //newCont.ItemsSource = Database.GetRangeOfRecords(Page.CurrentNumber, Updater.DBConnection).Result;
-
-            // Going to make CreatePagination public to execute in a task
             CreatePagination();
-
-            //CreatePaginationAsync();
-
             /*favCont.ItemsSource = items;
             delCont.ItemsSource = items;*/
             /*SongContainer.DataContext = items;
             SongContainer.ItemsSource = items;*/
         }
 
-        public async void CreatePagination()
+        async void CreatePagination()
         {
             /*int numberOfPages = await Database.NumberOfPages(Updater.DBConnection);
             PaginationNumber.Text = numberOfPages.ToString();*/
@@ -61,24 +56,6 @@ namespace Radio
             PaginationNumber.ItemsSource = items;*/
             PaginationNumber.ItemsSource = Page.GetNewButtonList(currPageList);
 
-        }
-
-        /*public async void CreatePaginationAsync()
-        {
-            Task t = Task.Run(() =>
-            {
-                PaginationNumber.ItemsSource = Page.GetNewButtonList(currPageList);
-            });
-
-            await t;
-        }*/
-
-        public async void CreatePaginationAsync()
-        {
-            //PaginationNumber.ItemsSource = Page.GetNewButtonList(currPageList);
-            Page._controlList = currPageList;
-            PaginationNumber.ItemsSource = Page.GetNewButtonList();
-            currPageList.ItemsSource = SongFromList.CurrentList;
         }
 
     }

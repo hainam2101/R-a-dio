@@ -34,7 +34,6 @@ namespace Radio
         SQLiteConnection DBConn; // TODO: Unused
 
         Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
-        SongList _favoritesList;
 
         public static MiniPlayer mp;
         public MainWindow()
@@ -82,9 +81,6 @@ namespace Radio
             bindingShowList.Executed += ShowList_Execute;
             bindingShowList.CanExecute += ShowList_CanExecute;
             CommandBindings.Add(bindingShowList);
-
-            /*_favoritesList = new SongList();
-            _favoritesList.Closing += ToggleSongList;*/
 
             RadioUpdater();
         }
@@ -216,134 +212,13 @@ namespace Radio
             args.CanExecute = true;
         }
 
-        // Original, working
-
         public void ShowList_Execute(object sender, ExecutedRoutedEventArgs args)
         {
-            var list = new SongList();
-            list.Show();
-            isListShowed = true;
-            list.Closing += ToggleSongList;
-        }
-        // new approach to avoid creating a songlist everytime
-        /*public void ShowList_Execute(object sender, ExecutedRoutedEventArgs args)
-        {
-            _favoritesList.CreatePaginationAsync();
-            _favoritesList.Show();
-            isListShowed = true;
-        }*/
-
-        /*public async void ShowList_Execute(object sender, ExecutedRoutedEventArgs args)
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                var list = new SongList();
-                list.Show();
-                isListShowed = true;
-                list.Closing += ToggleSongList;
-            });
-
-            TaskCompletionSource<bool?> completion = new TaskCompletionSource<bool?>();
-            this.Dispatcher.BeginInvoke(new Action(() => completion.SetResult(wrapper())));
-            bool? result = await completion.Task; ;
-        }*/
-
-        /*public void ShowList_Execute(object sender, ExecutedRoutedEventArgs args)
-        {
-
-
-            _favoritesList.Show();
-            isListShowed = true;
-            _favoritesList.Closing += ToggleSongList;
-        }*/
-
-        bool wrapper()
-        {
-            var list = new SongList();
-            list.Show();
-            isListShowed = true;
-            list.Closing += ToggleSongList;
-            return true;
-        }
-
-        public async void ShowList_Executes(object sender, ExecutedRoutedEventArgs args)
-        {
-            /*var list = new SongList();
-            list.Show();
-            isListShowed = true;
-            list.Closing += ToggleSongList;*/
             // TODO: This causes a heavy blocking in the UI thread.
-            //SongList list = null;
-            List<Page> list = null;
-            Page._controlList = _favoritesList.currPageList;
-
-            /*Task t = Task.Run(() =>
-            {
-                //list = new SongList();
-                //_favoritesList.CreatePagination();
-                list = Page.GetNewButtonList(_favoritesList.currPageList);
-                //System.Windows.Forms.MessageBox.Show("Running task");
-            });*/
-
-            /*this.Dispatcher.Invoke(() =>
-            {
-                try
-                {
-                    list = Page.GetNewButtonList();
-                }
-                catch (Exception exc)
-                {
-                    System.Windows.Forms.MessageBox.Show("Exception raised: " + exc.Message);
-                }
-            });*/
-                Task t = Task.Run(() =>
-                {
-                    //list = new SongList();
-                    //_favoritesList.CreatePagination();
-                    //list = Page.GetNewButtonList(_favoritesList.currPageList);
-                    try
-                    {
-                        list = Page.GetNewButtonList();
-                    }
-                    catch (Exception exc)
-                    {
-                        System.Windows.Forms.MessageBox.Show("Exception raised: " + exc.Message);
-                    }
-                    //System.Windows.Forms.MessageBox.Show("Running task");
-                });
-                await t;
-
-
-            //            await t;
-
-            if (list != null)
-            {
-                _favoritesList.PaginationNumber.ItemsSource = list;
-                _favoritesList.Show();
-                isListShowed = true;
-                _favoritesList.Closing += ToggleSongList;
-            }
-
-
-            //System.Windows.Forms.MessageBox.Show("Running task if");
-
-            /*if (list != null)
-            {
-                list.Show();
-                isListShowed = true;
-                list.Closing += ToggleSongList;
-                System.Windows.Forms.MessageBox.Show("Running task if");
-            }*/
-
-            //System.Windows.Forms.MessageBox.Show("Running task");
-
-            //t.Wait();
-            /*return t;*/
-        }
-
-        async void ShowFavoriteList()
-        {
-
+            var list = new SongList();
+            list.Show();
+            isListShowed = true;
+            list.Closing += ToggleSongList;
         }
 
         public void ShowList_CanExecute(object sender, CanExecuteRoutedEventArgs args)
