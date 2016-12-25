@@ -13,8 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data.SQLite;
+
+using System.Security.Permissions;
 
 namespace Radio
 {
@@ -25,9 +28,10 @@ namespace Radio
     {
         bool isMainShowed;
         bool isPlaying;
-        bool existsDB;
 
-        SQLiteConnection DBConn;
+        bool isListShowed;
+
+        SQLiteConnection DBConn; // TODO: Unused
 
         Player StreamMp3 = new Player("https://stream.r-a-d.io/main.mp3");
 
@@ -35,6 +39,11 @@ namespace Radio
         public MainWindow()
         {
             InitializeComponent();
+#if DEBUG
+            ShowDBPath();
+            CheckDbPermissions();
+#endif
+
 
             // Adds the event handler to close all the windows from MainWindow
             this.Closing += new System.ComponentModel.CancelEventHandler(closeApp);
@@ -65,6 +74,14 @@ namespace Radio
             bindingFav.CanExecute += Favorite_CanExecute;
             CommandBindings.Add(bindingFav);
 
+            // Command for the show list button
+            showSongList.Command = ShowListCommand.ShowList;
+            CommandBinding bindingShowList = new CommandBinding();
+            bindingShowList.Command = ShowListCommand.ShowList;
+            bindingShowList.Executed += ShowList_Execute;
+            bindingShowList.CanExecute += ShowList_CanExecute;
+            CommandBindings.Add(bindingShowList);
+
             RadioUpdater();
         }
 
@@ -72,27 +89,14 @@ namespace Radio
         {
             mp = new MiniPlayer();
 
+            /*var list = new SongList();
+            list.Show();*/
+
             // Pass this window
             mp.SetOtherView(this);
 
-            // Database exists?
-            if (Database.ExistsDB())
-            {
-                existsDB = true;   
-            }
-            else
-            {
-                existsDB = false;
-            }
-
-            if (existsDB)
-            {
-                DBConn = Database.CreateDBConnection();
-                DBConn.Open();
-            }
-
             Timer t = new Timer();
-            t.Interval = (int) Player.TickMode.NormalMode;
+            t.Interval = (int)Player.TickMode.NormalMode;
             Song playingNow = new Song();
 
             Updater.NeedToUpdate(playingNow, tbSong,
@@ -178,7 +182,7 @@ namespace Radio
                 {
                     await Database.CreateDBFileAndTableAsync();
                 }
-                
+
                 Updater.ConnectToDB();
                 //return; // Here we will ask for the user to create a DB or create one silently.
             }
@@ -207,6 +211,49 @@ namespace Radio
         {
             args.CanExecute = true;
         }
+
+        public void ShowList_Execute(object sender, ExecutedRoutedEventArgs args)
+        {
+            // TODO: This causes a heavy blocking in the UI thread.
+            var list = new SongList();
+            list.Show();
+            isListShowed = true;
+            list.Closing += ToggleSongList;
+        }
+
+        public void ShowList_CanExecute(object sender, CanExecuteRoutedEventArgs args)
+        {
+            //args.CanExecute = !isListShowed;
+            args.CanExecute = !isListShowed && Updater.DBConnection != null;
+        }
+
+        void ToggleSongList(object sender, CancelEventArgs args)
+        {
+            isListShowed = false;
+        }
+
+        #region Debug Methods
+
+        void ShowDBPath()
+        {
+            System.Windows.Forms.MessageBox.Show(Database._fullDBPath);
+        }
+
+        void CheckDbPermissions()
+        {
+            try
+            {
+                System.Windows.Forms.MessageBox.Show("Checking DB permissions...");
+                new FileIOPermission(FileIOPermissionAccess.Read, Database._fullDBPath).Demand();
+                System.Windows.Forms.MessageBox.Show("Permissions checked...");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+        }
+
+        #endregion // Debug Methods
 
     }
 }

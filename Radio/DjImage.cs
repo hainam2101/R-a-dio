@@ -11,12 +11,8 @@ namespace Radio
     {
 
         // Fields
-        /// TODO: Field to save image.
         BitmapImage _image;
         bool _loadImage;
-        /// TODO: Http Connection, maybe use a delegate or event, and the timer in Songs.cs should control
-        /// when to fetch the image again. Optimization wise: If the new Dj name fetched is the same as the
-        /// already Dj name, there's no need to fetch again the image.
 
         // Constructors
         public DjImage() {}

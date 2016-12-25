@@ -8,7 +8,7 @@ using System.Windows;
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
 // asociada con un ensamblado.
 [assembly: AssemblyTitle("Radio")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("R/a/dio Player")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Yureru")]
 [assembly: AssemblyProduct("Radio")]
@@ -51,5 +51,7 @@ using System.Windows;
 // Puede especificar todos los valores o usar los valores predeterminados de número de compilación y de revisión 
 // mediante el carácter '*', como se muestra a continuación:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.9.0.1")]
-[assembly: AssemblyFileVersion("0.9.0.1")]
+[assembly: AssemblyVersion("0.9.2.0")]
+[assembly: AssemblyFileVersion("0.9.2.0")]
+[assembly: Guid("c3b560d2-e844-4f6f-bafb-359cadd603fa")]
+

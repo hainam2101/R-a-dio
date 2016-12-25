@@ -63,6 +63,16 @@ namespace Radio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ClipboardIcon {
+            get {
+                object obj = ResourceManager.GetObject("ClipboardIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CloseIcon {
             get {
                 object obj = ResourceManager.GetObject("CloseIcon", resourceCulture);
@@ -167,6 +177,16 @@ namespace Radio.Properties {
             get {
                 object obj = ResourceManager.GetObject("SourceSansPro_Bold", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TrashIcon {
+            get {
+                object obj = ResourceManager.GetObject("TrashIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

@@ -15,12 +15,21 @@ namespace Radio
     /// </summary>
     static class Updater
     {
+        /* TODO: Fix several things.
+         * 1. R-a-d.io lately has been sometimes offline, handle properly this (we get a lot of dialogs with the error server 502),
+         *    check: errorWhileFetching.WasRaised in the NeedToUpdate function.
+         * 2. Don't check every second when the currentSecond is > than songDuration, because sometimes a DJ is streaming and the
+         *    songDuration tends to be 0, which causes a lot site request.
+         *  */
         static bool _hasStarted = false;
         static AsyncException<Exception> errorWhileFetching = new AsyncException<Exception>();
 
         public static string Favorite = "Favorite";
         public static string NoFavorite = "NoFavorite";
 
+        /// <summary>
+        /// The current DBConnection, check for null before using.
+        /// </summary>
         public static SQLiteConnection DBConnection;
 
         static Updater()
@@ -93,8 +102,20 @@ namespace Radio
 
         public static void ConnectToDB()
         {
-            DBConnection = Database.CreateDBConnection();
-            DBConnection.Open();
+            try
+            {
+                DBConnection = Database.CreateDBConnection();
+                DBConnection.Open();
+#if DEBUG
+                MessageBox.Show("No Exceptions, connection opened");
+#endif
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Exception found, can't connect to DB.\n" + err.Message);
+            }
+            /*DBConnection = Database.CreateDBConnection();
+            DBConnection.Open();*/
         }
     }
 }

@@ -111,9 +111,15 @@
         <!-- Logo / Menu -->
         <!--<Image Source="Resources/Images/Logo.png" Width="158" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" RenderOptions.BitmapScalingMode="Fant"></Image>-->
         <Grid>
-            <Image Source="Resources/Images/Logo.png" Width="158" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" RenderOptions.BitmapScalingMode="Fant"></Image>
+            <!-- Logo -->
+            <Image Source="Resources/Images/Logo.png" Width="158" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" RenderOptions.BitmapScalingMode="Fant"/>
+            <!-- Favorite -->
             <CheckBox Name="favOrUnfavSong"  Template="{StaticResource FavoriteOrUnfavorite}" local:Icons.Image="Resources/Images/HeartUnselectedIcon.png"  local:IconsSelected.ImageSelected="Resources/Images/HeartSelectedIcon.png"
-                    IsTabStop="False" Focusable="False" Width="16" Height="16" HorizontalAlignment="Right" Margin="0,15,36,0"/>
+                    IsTabStop="False" Focusable="False" Width="16" Height="16" HorizontalAlignment="Right" Margin="0,15,62,0"/>
+            <!-- Favorite List-->
+            <Button Name="showSongList"  Template="{StaticResource ImgButton}" local:Icons.Image="Resources/Images/ClipboardIcon.png" 
+                    IsTabStop="False" Focusable="False" Width="16" Height="16" HorizontalAlignment="Right" Margin="0,13,36,0"/>
+            <!-- MiniPlayer -->
             <Button Name="showMPlayer"  Template="{StaticResource ImgButton}" local:Icons.Image="Resources/Images/MinimizeIconBig.png" 
                     IsTabStop="False" Focusable="False" Width="16" Height="16" HorizontalAlignment="Right" Margin="0,15,10,0"/>
         </Grid>
